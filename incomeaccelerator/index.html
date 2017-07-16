@@ -226,7 +226,7 @@ $('#invForm').on('submit', function () {
 		return false;
 	}
 	if(!numYears.match(/^[0-9]{1,2}$/ig)){
-		alert('Invalid Input - Number of Years');
+		alert('Invalid Input - Years Invested');
 		return false;
 	}
 	
@@ -709,7 +709,15 @@ function displayGraphCompare(invFirst, invSecond){
 }
 
 function adjustDisplayInv1() {
-	inv1.divPercent = $('#divPercentInput1').val(); 
+	var divPercent = $('#divPercentInput1').val().replace(/([%]|[,]|[ ])+/g, '');
+
+	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
+	if(!divPercent.match(rex)){
+		alert('Invalid Input - Dividend Yield');
+		return false;
+	}
+
+	inv1.divPercent = divPercent;
 
 	inv1 = invCalc1(inv1);
 	$('#displayInv1').html(inv1.getHTML());
@@ -723,7 +731,15 @@ function adjustDisplayInv1() {
 }
 
 function adjustDisplayInv2() {
-	inv2.divPercent = $('#divPercentInput2').val(); 
+	var divPercent = $('#divPercentInput2').val().replace(/([%]|[,]|[ ])+/g, '');
+
+	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
+	if(!divPercent.match(rex)){
+		alert('Invalid Input - Dividend Yield');
+		return false;
+	}
+
+	inv2.divPercent = divPercent;
 
 	inv2 = invCalc2(inv2);
 	$('#displayInv2').html(inv2.getHTML());
@@ -737,8 +753,21 @@ function adjustDisplayInv2() {
 }
 
 function adjustDisplayInv3() {
-	inv3.divPercent = $('#divPercentInput3').val();
-	inv3.divGrowthPercent = $('#divGrowthPercentInput3').val();
+	var divPercent = $('#divPercentInput3').val().replace(/([%]|[,]|[ ])+/g, '');
+	var divGrowthPercent = $('#divGrowthPercentInput3').val().replace(/([%]|[,]|[ ])+/g, '');
+	
+	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
+	if(!divPercent.match(rex)){
+		alert('Invalid Input - Dividend Yield');
+		return false;
+	}
+	if(!divGrowthPercent.match(rex)){
+		alert('Invalid Input - Dividend Growth Rate');
+		return false;
+	}
+	
+	inv3.divPercent = divPercent;
+	inv3.divGrowthPercent = divGrowthPercent;
 
 	inv3 = invCalc2(inv3);
 	$('#displayInv3').html(inv3.getHTML());
@@ -752,8 +781,21 @@ function adjustDisplayInv3() {
 }
 
 function adjustDisplayInv4() {
-	inv4.divPercent = $('#divPercentInput4').val();
-	inv4.divGrowthPercent = $('#divGrowthPercentInput4').val();
+	var divPercent = $('#divPercentInput4').val().replace(/([%]|[,]|[ ])+/g, '');
+	var divGrowthPercent = $('#divGrowthPercentInput4').val().replace(/([%]|[,]|[ ])+/g, '');
+	
+	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
+	if(!divPercent.match(rex)){
+		alert('Invalid Input - Dividend Yield');
+		return false;
+	}
+	if(!divGrowthPercent.match(rex)){
+		alert('Invalid Input - Dividend Growth Rate');
+		return false;
+	}
+	
+	inv4.divPercent = divPercent;
+	inv4.divGrowthPercent = divGrowthPercent;
 
 	inv4 = invCalc2(inv4);
 	$('#displayInv4').html(inv4.getHTML());
@@ -767,8 +809,21 @@ function adjustDisplayInv4() {
 }
 
 function adjustDisplayInv5() {
-	inv5.divPercent = $('#divPercentInput5').val();
-	inv5.divGrowthPercent = $('#divGrowthPercentInput5').val();
+	var divPercent = $('#divPercentInput5').val().replace(/([%]|[,]|[ ])+/g, '');
+	var divGrowthPercent = $('#divGrowthPercentInput5').val().replace(/([%]|[,]|[ ])+/g, '');
+	
+	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
+	if(!divPercent.match(rex)){
+		alert('Invalid Input - Dividend Yield');
+		return false;
+	}
+	if(!divGrowthPercent.match(rex)){
+		alert('Invalid Input - Dividend Growth Rate');
+		return false;
+	}
+	
+	inv5.divPercent = divPercent;
+	inv5.divGrowthPercent = divGrowthPercent;
 
 	inv5 = invCalc2(inv5);
 	$('#displayInv5').html(inv5.getHTML());
@@ -791,12 +846,12 @@ function getAdjustFormHTML(inv){
 	html += "<form id='" + formID + "' onsubmit='" + formOnSubmit + "'>";
 		
 	var divPercentID = 'divPercentInput' + inv.invType; 
-	html += "<p>Dividend Percent (%) <input id='" + divPercentID + "' value='" + inv.divPercent + "'></input></p>";
+	html += "<p>Dividend Yield : <input id='" + divPercentID + "' value='" + inv.divPercent + "'></input></p>";
 
 	if(inv.invType == 3 || inv.invType == 4 || inv.invType == 5){
 			
 		var divGrowthPercentID = 'divGrowthPercentInput' + inv.invType;
-		html += "<p>Dividend Growth Percent (%) <input id='" + divGrowthPercentID + "' value='" + inv.divGrowthPercent + "'></input></p>";
+		html += "<p>Dividend Growth Rate : <input id='" + divGrowthPercentID + "' value='" + inv.divGrowthPercent + "'></input></p>";
 	}
 	html += "<input type='submit' value='Submit Percentages'></input>";
 	html += "</form>";
