@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html>
@@ -16,32 +17,32 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 
-</head>
+<title>Compound Interest; The Income Accelerator</title>
 
 <style>
 body {
+	color: #4d4d4d;
+	font-size: 16px;
+	font-family: Verdana;
 	letter-spacing: 2px;
+	background-image: url('BG.png');
 }
 input {
-	color: #000000;
-	padding: 5px;
-}
-h1 {
-	font-size: 28px;
+	color: #4d4d4d;
 }
 h2 {
-	font-size: 20px;
+	font-weight: bold;
+	font-size: 24px;
 }
 table {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	border: 1px solid #14446c;
+	display: inline-block;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	box-shadow: 0 0 20px #333;
 }
 table * {
 	text-align: center;
 	padding: 10px;
-	padding-left: 20px;
-	padding-right: 20px;
 }
 #banner {
 	background-image: url('bannerBG.png');
@@ -49,6 +50,8 @@ table * {
 #assumptions {
 	color: #ffffff;
 	background-color: #14446c;
+	margin-top: 15px;
+	box-shadow: 0 0 20px #333;
 }
 #luckLogo {
 	height: 125px;
@@ -57,7 +60,20 @@ table * {
 	height: 125px;
 }
 #invForm {
-	padding: 30px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+#invForm p {
+	font-weight: bold;
+	font-size: 18px;
+}
+#initInvestInput, #initSharePriceInput, #divPercentInput, #divGrowthPercentInput, #numYearsInput {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	padding-left: 15px;
+	border: 2px solid #ccc;
+	font-weight: bold;
+	font-size: 16px;
 }
 th {
 	color: #ffffff;
@@ -69,7 +85,28 @@ img {
 .smallTxt {
 	font-size: 12px;
 }
+
+/*  https://www.w3schools.com/howto/howto_js_scroll_to_top.asp  */
+#topBtn {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed/sticky position */
+    bottom: 20px; /* Place the button at the bottom of the page */
+    right: 30px; /* Place the button 30px from the right */
+    z-index: 99; /* Make sure it does not overlap */
+    border: none; /* Remove borders */
+    outline: none; /* Remove outline */
+    background-color: #14446c; /* Set a background color */
+    color: white; /* Text color */
+    cursor: pointer; /* Add a mouse pointer on hover */
+    padding: 15px; /* Some padding */
+    border-radius: 10px; /* Rounded corners */
+}
+#topBtn:hover {
+    background-color: #555; /* Add a dark-grey background on hover */
+}
 </style>
+
+</head>
 	
 <body>
 
@@ -96,19 +133,24 @@ img {
 			<div class="row">
 				<div class="col-lg-1"></div>
 				<div class="col-lg-2">
-					<p>Initial Investment<br/><br/><input id='initInvestInput' value='$100,000' required></input></p>
+					<p>Initial Investment</p>
+					<input id='initInvestInput' value='$100,000' required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Initial Share Price<br/><br/><input id='initSharePriceInput' value='$100' required></input></p>
+					<p>Initial Share Price</p>
+					<input id='initSharePriceInput' value='$100' required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Dividend Yield<br/><br/><input id='divPercentInput' value='5%' required></input></p>
+					<p>Dividend Yield</p>
+					<input id='divPercentInput' value='5%' required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Dividend Growth Rate<br/><br/><input id='divGrowthPercentInput' value='5%' required></input></p>
+					<p>Dividend Growth Rate</p>
+					<input id='divGrowthPercentInput' value='5%' required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Years Invested<br/><br/><input id='numYearsInput' value='5' required></input></p>
+					<p>Years Invested</p>
+					<input id='numYearsInput' value='5' required></input>
 				</div>
 				<div class="col-lg-1"></div>
 			</div>
@@ -167,6 +209,30 @@ img {
 </div>
 
 <br/>
+
+<!-- https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
+
+<button onclick="topFunction()" id="topBtn" title="Back to Top"><span class="glyphicon glyphicon-menu-up"></button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("topBtn").style.display = "block";
+    } else {
+        document.getElementById("topBtn").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0; // For Chrome, Safari and Opera 
+    document.documentElement.scrollTop = 0; // For IE and Firefox
+}
+
+</script>
 
 <div id="footer" class="container" style='width: 100%'>
 	<p class="text-muted credit smallTxt">
@@ -269,15 +335,22 @@ $('#invForm').on('submit', function () {
 	scenariosHTML += " <a href='#displayDetailedInv5'>5</a>";
 	scenariosHTML += "</p>";
 	
-	scenariosHTML += "<div class='container-fluid'> <div id='displayDetailedInv1'></div> </div>";
-	scenariosHTML += "<div class='container-fluid'>	<div id='displayDetailedInv2'></div> </div>";
-	scenariosHTML += "<div class='container-fluid'> <div id='displayDetailedInv3'></div> </div>";
+	scenariosHTML += "<hr/>";
+	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv1'></div> </div>";
 	
-	scenariosHTML += "<div class='container-fluid'> <div id='displayDetailedInv4'></div> </div>";
-	scenariosHTML += "<div class='container-fluid'> <div class='col-lg-6'> <canvas id='chartInv4'></canvas>  </div> <div class='col-lg-6'> <canvas id='chartInv4Income'></canvas> </div> </div>";
+	scenariosHTML += "<hr/>";
+	scenariosHTML += "<div class='container-fluid text-center'>	<div id='displayDetailedInv2'></div> </div>";
 	
-	scenariosHTML += "<div class='container-fluid'> <div id='displayDetailedInv5'></div> </div>";
-	scenariosHTML += "<div class='container-fluid'> <div class='col-lg-6'> <canvas id='chartInv5'></canvas> </div> <div class='col-lg-6'>  <canvas id='chartInv5Income'></canvas> </div> </div>";
+	scenariosHTML += "<hr/>";
+	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv3'></div> </div>";
+	
+	scenariosHTML += "<hr/>";
+	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv4'></div> </div> <br/><br/>";
+	scenariosHTML += "<div class='container-fluid text-center'> <div class='col-lg-6'> <canvas id='chartInv4'></canvas>  </div> <div class='col-lg-6'> <canvas id='chartInv4Income'></canvas> </div> </div>";
+	
+	scenariosHTML += "<hr/>";
+	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv5'></div> </div> <br/><br/>";
+	scenariosHTML += "<div class='container-fluid text-center'> <div class='col-lg-6'> <canvas id='chartInv5'></canvas> </div> <div class='col-lg-6'>  <canvas id='chartInv5Income'></canvas> </div> </div>";
 	
 	scenariosHTML += "</div>";
 	
@@ -305,12 +378,15 @@ $('#invForm').on('submit', function () {
 	scenariosHTML += "<div class='col-lg-6'> <select id='selectScenarioB' class='form-control' onchange='compareScenarioB()'> <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select> </div>";
 	scenariosHTML += "</div>";
 	
+	scenariosHTML += "<hr/>";
+	
 	scenariosHTML += "<div class='row'>";
-	scenariosHTML += "<div id='compareScenarioA' class='col-lg-6'> </div>";
-	scenariosHTML += "<div id='compareScenarioB' class='col-lg-6'> </div>";
+	scenariosHTML += "<div id='compareScenarioA' class='col-lg-6'></div>";
+	scenariosHTML += "<div id='compareScenarioB' class='col-lg-6'></div>";
 	scenariosHTML += "</div>";
 	
 	scenariosHTML += "<br/>";
+	scenariosHTML += "<hr/>";
 	
 	scenariosHTML += "<div class='row'>";
 	scenariosHTML += "<div class='col-lg-2'> </div> <div class='col-lg-8'> <canvas id='chartCompare'></canvas> </div> <div class='col-lg-2'> </div>";
@@ -369,11 +445,12 @@ function detailedViewToggle(){
 
 function comparisonViewToggle(){
 	$('#detailedScenarios').hide();
-	$('#compareScenarioA').html($('#displayInv1').html());
-	$('#compareScenarioB').html($('#displayInv2').html());
-	$('#selectScenarioA').val(1);
-	$('#selectScenarioB').val(2);
-	displayGraphCompare(getInv(1), getInv(2));
+	//$('#compareScenarioA').html($('#displayInv4').html());
+	//$('#compareScenarioB').html($('#displayInv5').html());
+	$('#selectScenarioA').val(4);
+	$('#selectScenarioB').val(5);
+	compareScenarioA();
+	compareScenarioB();
 	$('#comparisonScenarios').show();
 }
 
@@ -853,7 +930,7 @@ function getAdjustFormHTML(inv){
 		var divGrowthPercentID = 'divGrowthPercentInput' + inv.invType;
 		html += "<p>Dividend Growth Rate : <input id='" + divGrowthPercentID + "' value='" + inv.divGrowthPercent + "'></input></p>";
 	}
-	html += "<input type='submit' value='Submit Percentages'></input>";
+	html += "<input type='submit' value='Submit'></input>";
 	html += "</form>";
 	
 	return html;
@@ -1096,8 +1173,8 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		var html = "";
 		
 		html += "<h2>" + this.getTitle() + "</h2>";
-		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustInv" + this.invType + "'>Adjust Percentages</button> ";
-
+		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustInv" + this.invType + "'>Adjust Percentages</button> <br/>";
+		
 		html += "<table class='table-striped'>";
 		
 		// Value == investVals
@@ -1105,7 +1182,7 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		// Cumulative Return == Total Dividends Received as of N Years
 		
 		html += "<tr>";
-		html += "<th rowspan=2>Year</th> <th rowspan=2>Share Price</th> <th rowspan=2>Number of<br/>Shares</th> <th colspan=2>Account Value</th>";
+		html += "<th rowspan=2>Year</th> <th rowspan=2>Share Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Income</th> <th colspan=2>Account Value</th>";
 		html += "</tr>";
 		
 		html += "<tr>";
@@ -1133,6 +1210,8 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 			//html += "<td>" + getCurrency(this.sharePrices[i])+ "</td>";
 			
 			html += "<td>" + parseInt(this.numShares[i]) + "</td>";
+			
+			html += "<td style='background-color: #ffffb3'>" + getCurrency(this.dividends[i]) + "</td>";
 			
 			if(i > 0 && this.invType == 1){
 			
@@ -1170,10 +1249,24 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 			
 			html += "</tr>";
 		}
+		
+		html +=" <tr>";
+		html += "<th style='background-color: #14446c' colspan=3></th>";
+		html += "<th style='background-color: #14446c'>Total Income Paid</th>";
+		html += "<th style='background-color: #14446c' colspan=2></th>";
+		html += "</tr>";
+		
+		html +="<tr>";
+		html += "<td colspan=3></td>";
+		html += "<td style='background-color: #ffffb3'><b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></td>";
+		html += "<td colspan=2></td>";
+		html += "</tr>";
 				
 		html += "</table>";
 					
 		html += "<p>Net Total Return: <b>" + getPercentage(this.getROI()) + " ("+ getPercentage(this.getAnnROI()) + " Compound)</b></p>";
+		
+		html += "<p>Income Growth: <b>" + getPercentage(((this.dividends[this.numYears - 1] / this.dividends[0]) - 1) * 100) + "</b></p>";
 		
 		html += "<p>Income Paid: <b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></p>";
 		
@@ -1205,7 +1298,7 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		var html = "";
 		
 		html += "<h2>" + this.getDetailedTitle() + "</h2>";
-		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustInv" + this.invType + "'>Adjust Percentages</button> ";
+		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustInv" + this.invType + "'>Adjust Percentages</button> <br/>";
 		
 		html += "<table class='table-striped'>";
 		
@@ -1312,21 +1405,37 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		html += "</table>";
 		
 		html += "<p class='smallTxt'>* : Based on Initial Investment</p>";
-					
-		html += "<p>Net Total Return: <b>" + getPercentage(this.getROI()) + " ("+ getPercentage(this.getAnnROI()) + " Compound)</b></p>";
+			
+		html += "<div class='container-fluid text-center'>";
 		
-		html += "<p>Income Paid: <b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></p>";
+		//html += "<div class='col-lg-1'></div>";
+		
+		html += "<div class='col-lg-4'>Net Total Return: <b>" + getPercentage(this.getROI()) + " ("+ getPercentage(this.getAnnROI()) + " Compound)</b></div>";
+		
+		html += "<div class='col-lg-2'>Income Growth: <b>" + getPercentage(((this.dividends[this.numYears - 1] / this.dividends[0]) - 1) * 100) + "</b></div>";
+		
+		html += "<div class='col-lg-6'>";
+		
+		html += "Income Paid: <b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b>";
+		
+		html += " + ";
 		
 		var wealthCreated = this.getChangeInInv(this.numYears) - this.initInvest - this.getTotalDividend(this.numYears);
 		if(-1 < wealthCreated && wealthCreated < 1) {
-			html += "<p>Wealth Created: <b>" + getCurrency(0) + "</b></p>";
+			html += "Wealth Created: <b>" + getCurrency(0) + "</b>";
 		} else {
-			html += "<p>Wealth Created: <b>" + getCurrency(wealthCreated) + "</b></p>";
+			html += "Wealth Created: <b>" + getCurrency(wealthCreated) + "</b>";
 		}
 		
-		html += "<p>Net Profit: <b>" + getCurrency(this.getChangeInInv(this.numYears) - this.initInvest) + "</b></p>";
+		html += " = ";
 		
-		//html += "<hr/>";
+		html += "Net Profit: <b>" + getCurrency(this.getChangeInInv(this.numYears) - this.initInvest) + "</b>";
+		
+		html += "</div>";
+		
+		//html += "<div class='col-lg-1'></div>";
+		
+		html += "</div>";
 		
 		return html;
 	};
