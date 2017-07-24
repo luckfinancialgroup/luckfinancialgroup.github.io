@@ -74,7 +74,7 @@ table * {
 }
 #invForm p {
 	font-weight: bold;
-	font-size: 18px;
+	font-size: 16px;
 }
 #initInvestInput, #initSharePriceInput, #divPercentInput, #divGrowthPercentInput, #numYearsInput {
 	padding-top: 12px;
@@ -96,8 +96,20 @@ img {
 }
 #compareScenarioA, #compareScenarioB {
 	display: table;
+	text-align: center;
 }
-
+#compareScenarioA table {
+	box-shadow: 0 0 20px #ff0000;
+}
+#compareScenarioB table {
+	box-shadow: 0 0 20px #0000ff;
+}
+#compareScenarioA span {
+	color: #ff0000;
+}
+#compareScenarioB span {
+	color: #0000ff;
+}
 /*  https://www.w3schools.com/howto/howto_js_scroll_to_top.asp  */
 #topBtn {
     display: none; /* Hidden by default */
@@ -146,23 +158,23 @@ img {
 				<div class="col-lg-1"></div>
 				<div class="col-lg-2">
 					<p>Initial Investment</p>
-					<input id='initInvestInput' value='$100,000.00' size=15 required></input>
+					<input id='initInvestInput' value='$100,000.00' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
 					<p>Initial Share Price</p>
-					<input id='initSharePriceInput' value='$100.00' size=15 required></input>
+					<input id='initSharePriceInput' value='$100.00' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
 					<p>Dividend Yield</p>
-					<input id='divPercentInput' value='5.00%' size=15 required></input>
+					<input id='divPercentInput' value='5.00%' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
 					<p>Dividend Growth Rate</p>
-					<input id='divGrowthPercentInput' value='5.00%' size=15 required></input>
+					<input id='divGrowthPercentInput' value='5.00%' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
 					<p>Years Invested</p>
-					<input id='numYearsInput' value='5' size=15 required></input>
+					<input id='numYearsInput' value='5' size=14 required></input>
 				</div>
 				<div class="col-lg-1"></div>
 			</div>
@@ -936,12 +948,12 @@ function getAdjustFormHTML(inv){
 	html += "<form id='" + formID + "' onsubmit='" + formOnSubmit + "'>";
 		
 	var divPercentID = 'divPercentInput' + inv.invType; 
-	html += "<p>Dividend Yield : <input id='" + divPercentID + "' value='" + inv.divPercent + "%'></input></p>";
+	html += "<p>Dividend Yield : <input id='" + divPercentID + "' value='" + getPercentage(inv.divPercent) + "'></input></p>";
 
 	if(inv.invType == 3 || inv.invType == 4 || inv.invType == 5){
 			
 		var divGrowthPercentID = 'divGrowthPercentInput' + inv.invType;
-		html += "<p>Dividend Growth Rate : <input id='" + divGrowthPercentID + "' value='" + inv.divGrowthPercent + "%'></input></p>";
+		html += "<p>Dividend Growth Rate : <input id='" + divGrowthPercentID + "' value='" + getPercentage(inv.divGrowthPercent) + "'></input></p>";
 	}
 	html += "<input type='submit' value='Submit'></input>";
 	html += "</form>";
@@ -1174,15 +1186,15 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		this.numShares = [];
 	};
 	this.getTitle = function(){
-		var title = "Scenario " + this.invType + " :<br/>";
+		var title = "<span style='font-size: 30px;'>Scenario " + this.invType + "</span> :<br/>";
 		if(this.invType == 1){
-			title += ". " + this.divPercent + "% Dividend (Cash Paid)<br/>. No Growth<br/>. No Volatility";
+			title += ". " + getPercentage(this.divPercent) + " Dividend (Cash Paid)<br/>. No Growth<br/>. No Volatility";
 		} else if(this.invType == 2){
-			title += ". " + this.divPercent + "% Dividend (Dividends Reinvested)<br/>. No Growth<br/>. No Volatility";
+			title += ". " + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>. No Growth<br/>. No Volatility";
 		} else if(this.invType == 3){
-			title += ". " + this.divPercent + "% Dividend (Dividends Reinvested)<br/>. " + this.divGrowthPercent + "% Dividend Growth Rate<br/>. No Volatility";
+			title += ". " + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>. " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>. No Volatility";
 		} else {
-			title += ". " + this.divPercent + "% Dividend (Dividends Reinvested)<br/>. " + this.divGrowthPercent + "% Dividend Growth Rate<br/>. Share Price Volatility</li></ul>";
+			title += ". " + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>. " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>. Share Price Volatility</li></ul>";
 		}
 		return title;
 	};	
@@ -1199,11 +1211,11 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		// Cumulative Return == Total Dividends Received as of N Years
 		
 		html += "<tr>";
-		html += "<th rowspan=2>Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Income</th> <th rowspan=2>Yield</th> <th colspan=2>Account Value</th>";
+		html += "<th rowspan=2>&nbsp;&nbsp;Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Income</th> <th rowspan=2>Yield *</th> <th colspan=2>Account Value</th>";
 		html += "</tr>";
 		
 		html += "<tr>";
-		html += "<th>Start of Year</th> <th>End of Year</th>";
+		html += "<th>Start of<br/>Year</th> <th>End of<br/>Year</th>";
 		html += "</tr>";
 	
 		for(var i = 0 ; i < this.numYears ; i++){
@@ -1282,6 +1294,9 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 				
 		html += "</table>";
 					
+		html += "<p class='smallTxt'>* : Based on Initial Investment</p>";
+	
+		html += "<br/>";
 		html += "<p>Net Total Return: <b>" + getPercentage(this.getROI()) + " ("+ getPercentage(this.getAnnROI()) + " Compound)</b></p>";
 		
 		html += "<br/>";
@@ -1304,13 +1319,13 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 	this.getDetailedTitle = function(){
 		var title = "<span style='font-size: 30px;'>Scenario " + this.invType + "</span> : ";
 		if(this.invType == 1){
-			title += this.divPercent + "% Dividend (Cash Paid), No Growth, and No Volatility";
+			title += getPercentage(this.divPercent) + " Dividend (Cash Paid), No Growth, and No Volatility";
 		} else if(this.invType == 2){
-			title += this.divPercent + "% Dividend (Dividends Reinvested), No Growth, and No Volatility";
+			title += getPercentage(this.divPercent) + " Dividend (Dividends Reinvested), No Growth, and No Volatility";
 		} else if(this.invType == 3){
-			title += this.divPercent + "% Dividend (Dividends Reinvested), " + this.divGrowthPercent + "% Dividend Growth Rate, and No Volatility";
+			title += getPercentage(this.divPercent) + " Dividend (Dividends Reinvested), " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate, and No Volatility";
 		} else {
-			title += this.divPercent + "% Dividend (Dividends Reinvested), " + this.divGrowthPercent + "% Dividend Growth Rate, and Share Price Volatility</li></ul>";
+			title += getPercentage(this.divPercent) + " Dividend (Dividends Reinvested), " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate, and Share Price Volatility</li></ul>";
 		}
 		return title;
 	};	
@@ -1362,9 +1377,9 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 			html += getCurrency(accountValue) + "</td>";
 			
 			html += "<td>" + parseInt(this.numShares[i]) + "</td>";
-			html += "<td style='background-color: #ffffb3'>" + parseInt(this.getAddedShares()[i]) + "</td>";
+			html += "<td style='font-weight: bold; color: #009900; background-color: #ffffb3'>" + parseInt(this.getAddedShares()[i]) + "</td>";
 			
-			html += "<td style='background-color: #ffffb3'>" + getCurrency(this.dividends[i]) + "</td>";
+			html += "<td style='font-weight: bold; background-color: #ffffb3'>" + getCurrency(this.dividends[i]) + "</td>";
 			
 			// yield *
 			html += "<td>" + getPercentage((this.dividends[i] / this.investVals[0]) * 100) + "</td>";
@@ -1417,7 +1432,7 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		
 		html +="<tr>";
 		html += "<td colspan=4></th>";
-		html += "<td style='background-color: #ffffb3'><b>" + parseInt(this.getTotalAddedShares()) + "</b></td>";
+		html += "<td style='color: #009900; background-color: #ffffb3'><b>" + parseInt(this.getTotalAddedShares()) + "</b></td>";
 		html += "<td style='background-color: #ffffb3'><b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></td>";
 		html += "<td colspan=4></td>";
 		html += "</tr>";
