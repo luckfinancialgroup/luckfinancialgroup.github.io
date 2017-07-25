@@ -43,7 +43,7 @@ table {
 }
 table * {
 	text-align: center;
-	padding: 14px;
+	padding: 12px;
 	letter-spacing: 0px;
 }
 #nonDetailedTable * {
@@ -1238,7 +1238,7 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 			
 			html += "<td>" + parseInt(this.numShares[i]) + "</td>";
 			
-			html += "<td style='background-color: #ffffb3'>" + getCurrency(this.dividends[i]) + "</td>";
+			html += "<td style='background-color: #ffffb3'><b>" + getCurrency(this.dividends[i]) + "</b></td>";
 			
 			// yield *
 			html += "<td>" + getPercentage((this.dividends[i] / this.investVals[0]) * 100) + "</td>";
@@ -1248,34 +1248,34 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 				var yearStartAccountValue = this.investVals[i] + this.getTotalDividend(i);
 				
 				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'>";
+					html += "<td style='color: red'><b>";
 				} else {
-					html += "<td>";
+					html += "<td><b>";
 				}
 				
-				html += getCurrency(yearStartAccountValue) + "</td>";
+				html += getCurrency(yearStartAccountValue) + "</b></td>";
 			} else {
 				
 				var yearStartAccountValue = this.investVals[i];
 				
 				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'>";
+					html += "<td style='color: red'><b>";
 				} else {
-					html += "<td>";
+					html += "<td><b>";
 				}
 				
-				html += getCurrency(yearStartAccountValue) + "</td>";
+				html += getCurrency(yearStartAccountValue) + "</b></td>";
 			}
 			
 			var yearEndAccountValue = this.getChangeInInv(i + 1);
 			
 			if(yearEndAccountValue < this.initInvest){
-				html += "<td style='color: red'>";
+				html += "<td style='color: red'><b>";
 			} else {
-				html += "<td>";
+				html += "<td><b>";
 			}
 			
-			html += getCurrency(yearEndAccountValue) + "</td>";
+			html += getCurrency(yearEndAccountValue) + "</b></td>";
 			
 			html += "</tr>";
 		}
@@ -1288,7 +1288,7 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		
 		html +="<tr>";
 		html += "<td colspan=3></td>";
-		html += "<td style='background-color: #ffffb3'><b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></td>";
+		html += "<td style='background-color: #ffffb3;'><b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></td>";
 		html += "<td colspan=3></td>";
 		html += "</tr>";
 				
@@ -1391,34 +1391,34 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 				var yearStartAccountValue = this.investVals[i] + this.getTotalDividend(i);
 				
 				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'>";
+					html += "<td style='color: red'><b>";
 				} else {
-					html += "<td>";
+					html += "<td><b>";
 				}
 				
-				html += getCurrency(yearStartAccountValue) + "</td>";
+				html += getCurrency(yearStartAccountValue) + "</b></td>";
 			} else {
 				
 				var yearStartAccountValue = this.investVals[i];
 				
 				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'>";
+					html += "<td style='color: red'><b>";
 				} else {
-					html += "<td>";
+					html += "<td><b>";
 				}
 				
-				html += getCurrency(yearStartAccountValue) + "</td>";
+				html += getCurrency(yearStartAccountValue) + "</b></td>";
 			}
 			
 			var yearEndAccountValue = this.getChangeInInv(i + 1);
 			
 			if(yearEndAccountValue < this.initInvest){
-				html += "<td style='color: red'>";
+				html += "<td style='color: red'><b>";
 			} else {
-				html += "<td>";
+				html += "<td><b>";
 			}
 			
-			html += getCurrency(yearEndAccountValue) + "</td>";
+			html += getCurrency(yearEndAccountValue) + "</b></td>";
 			
 			html += "</tr>";
 		}
