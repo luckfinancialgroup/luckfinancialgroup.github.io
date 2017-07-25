@@ -157,23 +157,23 @@ img {
 			<div class="row">
 				<div class="col-lg-1"></div>
 				<div class="col-lg-2">
-					<p>Initial Investment</p>
+					<p>Initial<br/>Investment</p>
 					<input id='initInvestInput' value='$100,000.00' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Initial Share Price</p>
+					<p>Initial<br/>Share Price</p>
 					<input id='initSharePriceInput' value='$100.00' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Dividend Yield</p>
+					<p>Dividend<br/>Yield</p>
 					<input id='divPercentInput' value='5.00%' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Dividend Growth Rate</p>
+					<p>Dividend<br/>Growth Rate</p>
 					<input id='divGrowthPercentInput' value='5.00%' size=14 required></input>
 				</div>
 				<div class="col-lg-2">
-					<p>Years Invested</p>
+					<p>Years<br/>Invested</p>
 					<input id='numYearsInput' value='5' size=14 required></input>
 				</div>
 				<div class="col-lg-1"></div>
@@ -239,6 +239,9 @@ img {
 <button onclick="topFunction()" id="topBtn" title="Back to Top"><span class="glyphicon glyphicon-menu-up"></button>
 
 <script>
+//console.log( (Math.pow(19762 / 60, 1 / 120) - 1) * 100);
+//console.log( (Math.pow(2299792 / 60, 1 / 120) - 1) * 100);
+
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
 
@@ -1188,13 +1191,13 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 	this.getTitle = function(){
 		var title = "<span style='font-size: 30px;'>Scenario " + this.invType + "</span> :<br/>";
 		if(this.invType == 1){
-			title += ". " + getPercentage(this.divPercent) + " Dividend (Cash Paid)<br/>. No Growth<br/>. No Volatility";
+			title += "" + getPercentage(this.divPercent) + " Dividend (Cash Paid)<br/>No Growth<br/>No Volatility";
 		} else if(this.invType == 2){
-			title += ". " + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>. No Growth<br/>. No Volatility";
+			title += "" + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>No Growth<br/>No Volatility";
 		} else if(this.invType == 3){
-			title += ". " + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>. " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>. No Volatility";
+			title += "" + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>" + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>No Volatility";
 		} else {
-			title += ". " + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>. " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>. Share Price Volatility</li></ul>";
+			title += "" + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>" + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>Share Price Volatility</li></ul>";
 		}
 		return title;
 	};	
@@ -1342,7 +1345,7 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		// Cumulative Return == Total Dividends Received as of N Years
 		
 		html += "<tr>";
-		html += "<th rowspan=2>Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Value</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Additional<br/>Shares<br/>Purchased</th>  <th rowspan=2>Income</th> <th rowspan=2>Yield *</th> <th rowspan=2>Cumulative<br/>Income</th> <th colspan=2>Account Value</th>";
+		html += "<th rowspan=2>Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Additional<br/>Shares<br/>Purchased</th> <th rowspan=2>Value</th>  <th rowspan=2>Income</th> <th rowspan=2>Yield *</th> <th rowspan=2>Cumulative<br/>Income</th> <th colspan=2>Account Value</th>";
 		html += "</tr>";
 		
 		html += "<tr>";
@@ -1367,6 +1370,13 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 				html += "<td>" + getCurrency(this.sharePrices[i])+ "</td>";
 			}
 			
+			// num shares
+			html += "<td>" + parseInt(this.numShares[i]) + "</td>";
+			
+			// added shares
+			html += "<td style='font-weight: bold; color: #009900; background-color: #ffffb3'>" + parseInt(this.getAddedShares()[i]) + "</td>";
+			
+			// value
 			var accountValue = this.investVals[i];
 			
 			if(accountValue < this.initInvest){
@@ -1376,9 +1386,7 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 			}
 			html += getCurrency(accountValue) + "</td>";
 			
-			html += "<td>" + parseInt(this.numShares[i]) + "</td>";
-			html += "<td style='font-weight: bold; color: #009900; background-color: #ffffb3'>" + parseInt(this.getAddedShares()[i]) + "</td>";
-			
+			// income
 			html += "<td style='font-weight: bold; background-color: #ffffb3'>" + getCurrency(this.dividends[i]) + "</td>";
 			
 			// yield *
@@ -1424,15 +1432,17 @@ function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPe
 		}
 				
 		html +=" <tr>";
-		html += "<th style='background-color: #14446c' colspan=4></th>";
+		html += "<th style='background-color: #14446c' colspan=3></th>";
 		html += "<th style='background-color: #14446c'>Total<br/>Shares<br/>Purchased</th>";
+		html += "<th style='background-color: #14446c' colspan=1></th>";
 		html += "<th style='background-color: #14446c'>Total<br/>Income<br/>Paid</th>";
 		html += "<th style='background-color: #14446c' colspan=4></th>";
 		html += "</tr>";
 		
 		html +="<tr>";
-		html += "<td colspan=4></th>";
+		html += "<td colspan=3></th>";
 		html += "<td style='color: #009900; background-color: #ffffb3'><b>" + parseInt(this.getTotalAddedShares()) + "</b></td>";
+		html += "<td colspan=1></th>";
 		html += "<td style='background-color: #ffffb3'><b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></td>";
 		html += "<td colspan=4></td>";
 		html += "</tr>";
