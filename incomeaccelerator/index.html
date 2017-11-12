@@ -1,12 +1,8 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -14,13 +10,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
 <!-- chart js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
-
 <title>Compound Interest; The Income Accelerator</title>
-
 <style>
+@-ms-viewport{ width: auto !important; }
 body {
 	color: #4d4d4d;
 	font-size: 14px;
@@ -43,14 +37,10 @@ table {
 }
 table * {
 	text-align: center;
-	padding: 16px;
-	letter-spacing: 0px;
 }
-#nonDetailedTable * {
-	padding: 4px;
-	padding-top: 16px;
-	padding-bottom: 16px;
-	letter-spacing: 0px;
+th {
+	color: #ffffff;
+	background-color: #14446c;
 }
 #banner {
 	background-image: url('bannerBG.png');
@@ -59,6 +49,7 @@ table * {
 	color: #ffffff;
 	background-color: #14446c;
 	margin-top: 15px;
+	margin-bottom: 15px;
 	box-shadow: 0 0 20px #333;
 }
 #luckLogo {
@@ -68,15 +59,15 @@ table * {
 #incomeAccelLogo {
 	height: 125px;
 }
-#invForm {
-	padding-top: 15px;
-	padding-bottom: 15px;
+#assumptionsForm {
+	padding-top: 25px;
+	padding-bottom: 25px;
 }
-#invForm p {
+#assumptionsForm p {
 	font-weight: bold;
 	font-size: 16px;
 }
-#initInvestInput, #initSharePriceInput, #divPercentInput, #divGrowthPercentInput, #numYearsInput {
+#initialInvestmentInput, #initialSharePriceInput, #dividendYieldInput, #dividendGrowthRateInput, #yearsInvestedInput {
 	padding-top: 12px;
 	padding-bottom: 12px;
 	padding-left: 15px;
@@ -84,164 +75,243 @@ table * {
 	font-weight: bold;
 	font-size: 16px;
 }
-th {
-	color: #ffffff;
-	background-color: #14446c;
-}
 img {
 	margin: 15px;
 }
 .smallTxt {
 	font-size: 12px;
 }
-#compareScenarioA, #compareScenarioB {
+#detailedView table * {
+	padding: 15px;
+}
+#comparisonViewInvestmentA, #comparisonViewInvestmentB {
 	display: table;
 	text-align: center;
 }
-#compareScenarioA table {
-	box-shadow: 0 0 20px #ff0000;
+#comparisonViewInvestmentA table {
+	box-shadow: 0 0 15px #ff0000;
+	margin-left: -15px;
+	margin-right: -15px;
 }
-#compareScenarioB table {
-	box-shadow: 0 0 20px #0000ff;
+#comparisonViewInvestmentB table {
+	box-shadow: 0 0 15px #0000ff;
+	margin-left: -15px;
+	margin-right: -15px;
 }
-#compareScenarioA span {
-	color: #ff4d4d;
+#comparisonViewInvestmentA table * {
+	padding: 5px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	letter-spacing: 0px;
 }
-#compareScenarioB span {
-	color: #4d4dff;
+#comparisonViewInvestmentB table * {
+	padding: 5px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	letter-spacing: 0px;
 }
-/*  https://www.w3schools.com/howto/howto_js_scroll_to_top.asp  */
 #topBtn {
-    display: none; /* Hidden by default */
-    position: fixed; /* Fixed/sticky position */
-    bottom: 20px; /* Place the button at the bottom of the page */
-    right: 30px; /* Place the button 30px from the right */
-    z-index: 99; /* Make sure it does not overlap */
-    border: none; /* Remove borders */
-    outline: none; /* Remove outline */
-    background-color: #14446c; /* Set a background color */
-    color: white; /* Text color */
-    cursor: pointer; /* Add a mouse pointer on hover */
-    padding: 15px; /* Some padding */
-    border-radius: 10px; /* Rounded corners */
+    display: none; 
+    position: fixed; 
+    bottom: 40px; 
+    right: 40px; 
+    z-index: 99; 
+    border: none; 
+    outline: none; 
+    background-color: #14446c;
+    color: white;
+    cursor: pointer;
+    padding: 25px; 
+    border-radius: 15px;
 }
 #topBtn:hover {
     background-color: #555; /* Add a dark-grey background on hover */
 }
 </style>
-
 </head>
 	
 <body>
 
-<div id="banner" class="container-fluid">
-	<div class="row">
-		<div class="col-lg-8 text-left">
+<div id='banner' class='container-fluid'>
+	<div class='row'>
+		<div class='col-lg-8 text-left'>
 			<img id='incomeAccelLogo' src='incomeAccelLogo.png'/>
 		</div>
-		<div class="col-lg-4 text-right">
+		<div class='col-lg-4 text-right'>
 			<img id='luckLogo' src='luckLogo.png'/>
 		</div>
 	</div>
-	<div class="row">
+	<div class='row'>
 		<hr style='color: #185281; border-color: #185281; background-color: #185281; margin: 10px'/>	
 	</div>
 </div>
 
-<div id="assumptions" class="container-fluid">
-	
-	<br/>
-	
-	<div class="container-fluid text-center">
-		<form id='invForm'>
-			<div class="row">
-				<div class="col-lg-1"></div>
-				<div class="col-lg-2">
+<div id='assumptions' class='container-fluid'>	
+	<div class='container-fluid text-center'>
+		<form id='assumptionsForm'>
+			<div class='row'>
+				<div class='col-lg-1'></div>
+				<div class='col-lg-2'>
 					<p>Initial<br/>Investment</p>
-					<input id='initInvestInput' value='$100,000.00' size=14 required></input>
+					<input id='initialInvestmentInput' value='$100,000.00' size=14 required></input>
 				</div>
-				<div class="col-lg-2">
+				<div class='col-lg-2'>
 					<p>Initial<br/>Share Price</p>
-					<input id='initSharePriceInput' value='$100.00' size=14 required></input>
+					<input id='initialSharePriceInput' value='$100.00' size=14 required></input>
 				</div>
-				<div class="col-lg-2">
+				<div class='col-lg-2'>
 					<p>Dividend<br/>Yield</p>
-					<input id='divPercentInput' value='5.00%' size=14 required></input>
+					<input id='dividendYieldInput' value='5.00%' size=14 required></input>
 				</div>
-				<div class="col-lg-2">
+				<div class='col-lg-2'>
 					<p>Dividend<br/>Growth Rate</p>
-					<input id='divGrowthPercentInput' value='5.00%' size=14 required></input>
+					<input id='dividendGrowthRateInput' value='5.00%' size=14 required></input>
 				</div>
-				<div class="col-lg-2">
+				<div class='col-lg-2'>
 					<p>Years<br/>Invested</p>
-					<input id='numYearsInput' value='5' size=14 required></input>
+					<input id='yearsInvestedInput' value='5' size=14 required></input>
 				</div>
-				<div class="col-lg-1"></div>
+				<div class='col-lg-1'></div>
 			</div>
 			<br/>
-			<input type="submit" value="Submit" class='btn btn-default'></input>
+			<input type='submit' value='Submit' class='btn btn-default'></input>
 		</form>
 	</div>
 </div>
 
-<div id="scenarios" class="container-fluid"></div>
-
-<div id="modalAdjustInv1" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <div class="modal-body">
-			<div id='adjustInv1'></div>
-        </div>
-    </div>
-  </div>
-</div>
-<div id="modalAdjustInv2" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <div class="modal-body">
-			<div id='adjustInv2'></div>
-        </div>
-    </div>
-  </div>
-</div>
-<div id="modalAdjustInv3" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <div class="modal-body">
-			<div id='adjustInv3'></div>
-        </div>
-    </div>
-  </div>
-</div>
-<div id="modalAdjustInv4" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <div class="modal-body">
-			<div id='adjustInv4'></div>
-        </div>
-    </div>
-  </div>
-</div>
-<div id="modalAdjustInv5" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-	    <div class="modal-body">
-			<div id='adjustInv5'></div>
-        </div>
-    </div>
-  </div>
+<div id='viewToggle' hidden>
+	<ul class='nav nav-pills nav-justified'>
+		<li onmousedown='detailedViewToggle();'><a>Detailed View</a></li>
+		<li onmousedown='comparisonViewToggle();'><a>Comparison View</a></li>
+	</ul>
 </div>
 
-<br/>
+<div id='detailedView' hidden>
+	<p class='row text-center'>
+		Browse Scenarios  :
+		<a href='#detailedViewInvestment1'>1</a>
+		<a href='#detailedViewInvestment2'>2</a>
+		<a href='#detailedViewInvestment3'>3</a>
+		<a href='#detailedViewInvestment4'>4</a>
+	</p>
+	
+	<hr/>
+	
+	<div class='container-fluid text-center'>
+		<div id='detailedViewInvestment1'></div>
+	</div>
+	
+	<hr/>
+	
+	<div class='container-fluid text-center'>
+		<div id='detailedViewInvestment2'></div>
+	</div>
+	
+	<hr/>
+	
+	<div class='container-fluid text-center'>
+		<div id='detailedViewInvestment3'></div>
+	</div> 
+	<br/>
+	<div class='container-fluid text-center'>
+		<div class='col-lg-6'>
+			<canvas id='chartInvestment3'></canvas>
+		</div>
+		<div class='col-lg-6'>
+			<canvas id='chartIncomeInvestment3'></canvas>
+		</div>
+	</div>
+	
+	<hr/>
+	
+	<div class='container-fluid text-center'>
+		<div id='detailedViewInvestment4'></div>
+	</div>
+	<br/>
+	<div class='container-fluid text-center'>
+		<div class='col-lg-6'>
+			<canvas id='chartInvestment4'></canvas>
+		</div>
+		<div class='col-lg-6'>
+			<canvas id='chartIncomeInvestment4'></canvas>
+		</div>
+	</div>
+</div>
+
+<div id='comparisonView' hidden>
+	<div class='container-fluid text-center'>
+		<p>Please select two scenarios:</p>
+		<div class='col-lg-6'>
+			<select id='selectScenarioA' class='form-control' onchange='setScenarioA()'>
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+			</select>
+		</div>
+		<div class='col-lg-6'>
+			<select id='selectScenarioB' class='form-control' onchange='setScenarioB()'>
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+			</select>
+		</div>
+	</div>
+	
+	<hr/>
+	
+	<div class='container-fluid text-center'>
+		<div id='comparisonViewInvestmentA' class='col-lg-6'></div>
+		<div id='comparisonViewInvestmentB' class='col-lg-6'></div>
+	</div>
+	
+	<hr/>
+	
+	<div class='container-fluid text-center'>
+		<div class='col-lg-2'></div>
+		<div class='col-lg-8'>
+			<canvas id='chartCompareInvestments'></canvas>
+		</div>
+		<div class='col-lg-2'></div>
+	</div>
+	
+	<div id='comparisonViewInvestment1' hidden></div>
+	<div id='comparisonViewInvestment2' hidden></div>
+	<div id='comparisonViewInvestment3' hidden></div>
+	<div id='comparisonViewInvestment4' hidden></div>
+</div>
+
+<div id='modalAdjustRates' class='modal fade' role='dialog'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+	    <div class='modal-body'>
+			<div id='adjustRatesView'></div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div id='footer' class='container' style='width: 100%'>
+	<p class='text-muted credit smallTxt'>
+		This <b><i>Income Accelerator</i></b> illustration is for discussion purposes only. 
+		Information contained herein is obtained from sources believed to be reliable, but is not guaranteed. 
+		Calculations/projections are based on a number of assumptions; actual results may differ.
+		Yields/rates are as of the date of this report unless otherwise noted. 
+		This report has been created by, and is the sole property and copyright of Darren Luck. 
+		This report is provided exclusively for the clients of Darren Luck and the Luck Financial Group of CIBC Wood Gundy under licence. 
+		The Income Accelerator report and its contents are the sole property of Darren Luck and the image or any likeness, in whole or in part may not be reproduced, disseminated, published or copied in any way.
+		<br/>
+		&copy; 2017 Darren Luck.
+		<i>CIBC Wood Gundy is a division of CIBC World Markets Inc., a subsidiary of CIBC and a Member of the Canadian Investor Protection Fund and Investment Industry Regulatory Organization of Canada</i>.
+	</p>
+</div>
 
 <!-- https://www.w3schools.com/howto/howto_js_scroll_to_top.asp -->
 
 <button onclick="topFunction()" id="topBtn" title="Back to Top"><span class="glyphicon glyphicon-menu-up"></button>
 
 <script>
-//console.log( (Math.pow(19762 / 60, 1 / 120) - 1) * 100);
-//console.log( (Math.pow(2299792 / 60, 1 / 120) - 1) * 100);
-
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function() {scrollFunction()};
 
@@ -259,284 +329,502 @@ function topFunction() {
     document.documentElement.scrollTop = 0; // For IE and Firefox
 }
 
-</script>
+var investment1;
+var investment2;
+var investment3;
+var investment4;
 
-<div id="footer" class="container" style='width: 100%'>
-	<p class="text-muted credit smallTxt">
-		This <b><i>Income Accelerator</i></b> illustration is for discussion purposes only. 
-		Information contained herein is obtained from sources believed to be reliable, but is not guaranteed. 
-		Calculations/projections are based on a number of assumptions; actual results may differ.
-		Yields/rates are as of the date of this report unless otherwise noted. 
-		This report has been created by, and is the sole property and copyright of Darren Luck. 
-		This report is provided exclusively for the clients of Darren Luck and the Luck Financial Group of CIBC Wood Gundy under licence. 
-		The Income Accelerator report and its contents are the sole property of Darren Luck and the image or any likeness, in whole or in part may not be reproduced, disseminated, published or copied in any way.
-		<br/>
-		&copy; 2017 Darren Luck.
-		<i>CIBC Wood Gundy is a division of CIBC World Markets Inc., a subsidiary of CIBC and a Member of the Canadian Investor Protection Fund and Investment Industry Regulatory Organization of Canada</i>.
-	</p>
-</div>
+var chartInvestment3;
+var chartIncomeInvestment3;
 
+var chartInvestment4;
+var chartIncomeInvestment4;
 
-<script>
-var inv1 = {};
-var inv2 = {};
-var inv3 = {};
+var chartCompareInvestments;
 
-var inv4 = {};
-var chartInv4;
-var chartInv4Income;
-
-var inv5 = {};
-var chartInv5;
-var chartInv5Income;
-
-var chartCompare;
-
-$('#invForm').on('submit', function () {
-
-	var initInvest = $('#initInvestInput').val().replace(/([$]|[,]|[ ])+/g, '');
-	var initSharePrice = $('#initSharePriceInput').val().replace(/([$]|[,]|[ ])+/g, '');
-	var divPercent = $('#divPercentInput').val().replace(/([%]|[,]|[ ])+/g, '');
-	var divGrowthPercent = $('#divGrowthPercentInput').val().replace(/([%]|[,]|[ ])+/g, '');
-	var numYears = $('#numYearsInput').val();
+$(document).ready(function() {
 	
-	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
-	if(!initInvest.match(rex)){
-		alert('Invalid Input - Initial Investment');
+	$('#assumptionsForm').on('submit', function () {
+
+		var initialInvestment = $('#initialInvestmentInput').val().replace(/([$]|[,]|[ ])+/g, '');
+		var initialSharePrice = $('#initialSharePriceInput').val().replace(/([$]|[,]|[ ])+/g, '');
+		var dividendYield = $('#dividendYieldInput').val().replace(/([%]|[,]|[ ])+/g, '');
+		var dividendGrowthRate = $('#dividendGrowthRateInput').val().replace(/([%]|[,]|[ ])+/g, '');
+		var yearsInvested = $('#yearsInvestedInput').val();
+			
+		var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
+		if(!initialInvestment.match(rex)){
+			alert('Invalid Input - Initial Investment');
+			return false;
+		}
+		if(!initialSharePrice.match(rex)){
+			alert('Invalid Input - Share Price');
+			return false;
+		}
+		if(!dividendYield.match(rex)){
+			alert('Invalid Input - Dividend Yield');
+			return false;
+		}
+		if(!dividendGrowthRate.match(rex)){
+			alert('Invalid Input - Dividend Growth Rate');
+			return false;
+		}
+		if(!yearsInvested.match(/^[0-9]{1,2}$/ig)){
+			alert('Invalid Input - Years Invested');
+			return false;
+		}
+		
+		// Convert Strings to Numbers
+		initialInvestment = initialInvestment * 1;
+		initialSharePrice = initialSharePrice * 1;
+		dividendYield = dividendYield * 0.01;
+		dividendGrowthRate = dividendGrowthRate * 0.01;
+		yearsInvested = yearsInvested * 1;
+		
+		$('#initialInvestInput').val(parseCurrency(initialInvestment));
+		$('#inititialSharePriceInput').val(parseCurrency(initialSharePrice));
+		$('#dividendYieldInput').val(parsePercentage(dividendYield * 100));
+		$('#dividendGrowthRateInput').val(parsePercentage(dividendGrowthRate * 100));
+		$('#yearsInvestedInput').val(yearsInvested);
+		
+		$('#viewToggle').show();
+		detailedViewToggle();
+		
+		// false - Cash Paid Strategy
+		// true - Dividend Reinvestment Strategy
+		
+		investment1 = new Investment(initialInvestment, initialSharePrice, dividendYield, dividendGrowthRate, yearsInvested, dividendsReinvested=false);
+		investment1.performStrategy();
+		//console.log(investment1);
+		
+		investment2 = new Investment(initialInvestment, initialSharePrice, dividendYield, dividendGrowthRate, yearsInvested, dividendsReinvested=true);
+		investment2.performStrategy();
+		//console.log(investment2);
+		
+		investment3 = new Investment(initialInvestment, initialSharePrice, dividendYield, dividendGrowthRate, yearsInvested, dividendsReinvested=true);
+		investment3.performStrategy();
+		//console.log(investment3);
+		
+		investment4 = new Investment(initialInvestment, initialSharePrice, dividendYield, dividendGrowthRate, yearsInvested, dividendsReinvested=true);
+		investment4.performStrategy();
+		//console.log(investment4);
+		
+		$('#detailedViewInvestment1').html(getDetailedView(investment1, scenarioNumber=1));
+		$('#detailedViewInvestment2').html(getDetailedView(investment2, scenarioNumber=2));
+		$('#detailedViewInvestment3').html(getDetailedView(investment3, scenarioNumber=3));
+		$('#detailedViewInvestment4').html(getDetailedView(investment4, scenarioNumber=4));
+		
+		$('#comparisonViewInvestment1').html(getComparisonView(investment1, scenarioNumber=1));
+		$('#comparisonViewInvestment2').html(getComparisonView(investment2, scenarioNumber=2));
+		$('#comparisonViewInvestment3').html(getComparisonView(investment3, scenarioNumber=3));
+		$('#comparisonViewInvestment4').html(getComparisonView(investment4, scenarioNumber=4));
+		
+		setCharts();
+		
 		return false;
-	}
-	if(!initSharePrice.match(rex)){
-		alert('Invalid Input - Share Price');
-		return false;
-	}
-	if(!divPercent.match(rex)){
-		alert('Invalid Input - Dividend Yield');
-		return false;
-	}
-	if(!divGrowthPercent.match(rex)){
-		alert('Invalid Input - Dividend Growth Rate');
-		return false;
-	}
-	if(!numYears.match(/^[0-9]{1,2}$/ig)){
-		alert('Invalid Input - Years Invested');
-		return false;
-	}
-	
-	$('#initInvestInput').val(getCurrency(initInvest));
-	$('#initSharePriceInput').val(getCurrency(initSharePrice));
-	$('#divPercentInput').val(getPercentage(divPercent));
-	$('#divGrowthPercentInput').val(getPercentage(divGrowthPercent));
-	
-	inv1 = new Investment(1, initInvest, initSharePrice, divPercent, 0, numYears);
-	inv1 = invCalc1(inv1);
-	
-	inv2 = new Investment(2, initInvest, initSharePrice, divPercent, 0, numYears);
-	inv2 = invCalc2(inv2);
-	
-	inv3 = new Investment(3, initInvest, initSharePrice, divPercent, divGrowthPercent, numYears);
-	inv3 = invCalc2(inv3);
-	
-	inv4 = new Investment(4, initInvest, initSharePrice, divPercent, divGrowthPercent, numYears);
-	inv4 = invCalc2(inv4);
-	
-	inv5 = new Investment(5, initInvest, initSharePrice, divPercent, divGrowthPercent, numYears);
-	inv5 = invCalc2(inv5);
-
-	var scenariosHTML = "";
-	
-	scenariosHTML += "<br/>";
-	
-	scenariosHTML += "<ul class='nav nav-pills nav-justified'>";
-	scenariosHTML += "<li onClick='detailedViewToggle();'><a>Detailed View</a></li>";
-	scenariosHTML += "<li onClick='comparisonViewToggle();'><a>Comparison View</a></li>";
-	scenariosHTML += "</ul>";
-	
-	// detailed view of scenarios
-	
-	scenariosHTML += "<div id='detailedScenarios'>";
-	
-	scenariosHTML += "<br/>";
-	
-	scenariosHTML += "<p class='row text-center'>";
-	scenariosHTML += "Browse Scenarios  :";
-	scenariosHTML += " <a href='#displayDetailedInv1'>1</a>";
-	scenariosHTML += " <a href='#displayDetailedInv2'>2</a>";
-	scenariosHTML += " <a href='#displayDetailedInv3'>3</a>";
-	scenariosHTML += " <a href='#displayDetailedInv4'>4</a>";
-	scenariosHTML += " <a href='#displayDetailedInv5'>5</a>";
-	scenariosHTML += "</p>";
-	
-	scenariosHTML += "<hr/>";
-	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv1'></div> </div>";
-	
-	scenariosHTML += "<hr/>";
-	scenariosHTML += "<div class='container-fluid text-center'>	<div id='displayDetailedInv2'></div> </div>";
-	
-	scenariosHTML += "<hr/>";
-	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv3'></div> </div>";
-	
-	scenariosHTML += "<hr/>";
-	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv4'></div> </div> <br/><br/>";
-	scenariosHTML += "<div class='container-fluid text-center'> <div class='col-lg-6'> <canvas id='chartInv4'></canvas>  </div> <div class='col-lg-6'> <canvas id='chartInv4Income'></canvas> </div> </div>";
-	
-	scenariosHTML += "<hr/>";
-	scenariosHTML += "<div class='container-fluid text-center'> <div id='displayDetailedInv5'></div> </div> <br/><br/>";
-	scenariosHTML += "<div class='container-fluid text-center'> <div class='col-lg-6'> <canvas id='chartInv5'></canvas> </div> <div class='col-lg-6'>  <canvas id='chartInv5Income'></canvas> </div> </div>";
-	
-	scenariosHTML += "</div>";
-	
-	// non-detailed view of scenarios
-	
-	scenariosHTML += "<div id='nonDetailedScenarios'>";
-	
-	scenariosHTML += "<div id='displayInv1'></div>";
-	scenariosHTML += "<div id='displayInv2'></div>";
-	scenariosHTML += "<div id='displayInv3'></div>";
-	scenariosHTML += "<div id='displayInv4'></div>";
-	scenariosHTML += "<div id='displayInv5'></div>";
-	
-	scenariosHTML += "</div>";
-	
-	// comparison view of scenarios
-	
-	scenariosHTML += "<div id='comparisonScenarios'>";
-	
-	scenariosHTML += "<br/>";
-	
-	scenariosHTML += "<div class='row text-center'>";
-	scenariosHTML += "<p>Please select two scenarios:</p>";
-	scenariosHTML += "<div class='col-lg-6'> <select id='selectScenarioA' class='form-control' onchange='compareScenarioA()'> <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select> </div>";
-	scenariosHTML += "<div class='col-lg-6'> <select id='selectScenarioB' class='form-control' onchange='compareScenarioB()'> <option>1</option> <option>2</option> <option>3</option> <option>4</option> <option>5</option> </select> </div>";
-	scenariosHTML += "</div>";
-	
-	scenariosHTML += "<hr/>";
-	
-	scenariosHTML += "<div class='row'>";
-	scenariosHTML += "<div id='compareScenarioA' class='col-lg-6'></div>";
-	scenariosHTML += "<div id='compareScenarioB' class='col-lg-6'></div>";
-	scenariosHTML += "</div>";
-	
-	scenariosHTML += "<hr/>";
-	
-	scenariosHTML += "<div class='row'>";
-	scenariosHTML += "<div class='col-lg-2'> </div> <div class='col-lg-8'> <canvas id='chartCompare'></canvas> </div> <div class='col-lg-2'> </div>";
-	scenariosHTML += "</div>";
-	
-	scenariosHTML += "</div>";
-	
-	$('#scenarios').html(scenariosHTML);
-	
-	$('#displayInv1').html(inv1.getHTML());
-	$('#displayInv2').html(inv2.getHTML());
-	$('#displayInv3').html(inv3.getHTML());
-	$('#displayInv4').html(inv4.getHTML());
-	$('#displayInv5').html(inv5.getHTML());
-	
-	$('#displayDetailedInv1').html(inv1.getDetailedHTML());
-	$('#displayDetailedInv2').html(inv2.getDetailedHTML());
-	$('#displayDetailedInv3').html(inv3.getDetailedHTML());
-	$('#displayDetailedInv4').html(inv4.getDetailedHTML());
-	$('#displayDetailedInv5').html(inv5.getDetailedHTML());
-	
-	$('#adjustInv1').html(getAdjustFormHTML(inv1));
-	$('#adjustInv2').html(getAdjustFormHTML(inv2));
-	$('#adjustInv3').html(getAdjustFormHTML(inv3));
-	$('#adjustInv4').html(getAdjustFormHTML(inv4));
-	$('#adjustInv5').html(getAdjustFormHTML(inv5));
-	
-	$('#nonDetailedScenarios').hide();
-	$('#comparisonScenarios').hide();
-	
-	displayGraph();
-	
-    return false;
+	});
 });
 
-function getInv(invType){
-	if(invType == 1){
-		return inv1;
-	} else if(invType == 2){
-		return inv2;
-	} else if(invType == 3){
-		return inv3;
-	} else if(invType == 4){
-		return inv4;
-	} else if(invType == 5){
-		return inv5;
+function detailedViewToggle(){
+	$('#detailedView').show();
+	$('#comparisonView').hide();
+	return false;
+}
+
+function comparisonViewToggle(){
+	$('#detailedView').hide();
+	$('#comparisonView').show();
+	$('#selectScenarioA').val(3);
+	$('#selectScenarioB').val(4);
+	setScenarioA();
+	setScenarioB();
+	setCharts();
+	return false;
+}
+
+function setScenarioA(){
+	$('#comparisonViewInvestmentA').html(
+		$('#comparisonViewInvestment' + $("#selectScenarioA").val()).html()
+	);
+	setChartCompare($("#selectScenarioA").val(), $("#selectScenarioB").val());
+}
+
+function setScenarioB(){
+	$('#comparisonViewInvestmentB').html(
+		$('#comparisonViewInvestment' + $("#selectScenarioB").val()).html()
+	);
+	setChartCompare($("#selectScenarioA").val(), $("#selectScenarioB").val());
+}
+
+function getInvestmentTitle(investment, scenarioNumber) {
+	if(scenarioNumber == 1){
+		return 'Scenario ' + scenarioNumber + ' : ' + parsePercentage(investment.dividendYield * 100) + ' Dividend (Cash Paid), ' + parsePercentage(investment.dividendGrowthRate * 100) + ' Dividend Growth Rate, and No Volatility';
+	} else if(scenarioNumber == 2){
+		return 'Scenario ' + scenarioNumber + ' : ' + parsePercentage(investment.dividendYield * 100) + ' Dividend (Dividends Reinvested), ' + parsePercentage(investment.dividendGrowthRate * 100) + ' Dividend Growth Rate, and No Volatility';
+	} else {
+		return 'Scenario ' + scenarioNumber + ' : ' + parsePercentage(investment.dividendYield * 100) + ' Dividend (Dividends Reinvested), ' + parsePercentage(investment.dividendGrowthRate * 100) + ' Dividend Growth Rate, and Share Price Volatility';
+	}
+}
+
+function getInvestment(scenarioNumber){
+	if(scenarioNumber == 1){
+		return investment1;
+	} else if(scenarioNumber == 2){
+		return investment2;
+	} else if(scenarioNumber == 3){
+		return investment3;
+	} else if(scenarioNumber == 4){
+		return investment4;
 	} else {
 		return null;
 	}
 }
 
-function detailedViewToggle(){
-	$('#detailedScenarios').show();
-	$('#comparisonScenarios').hide();
-}
-
-function comparisonViewToggle(){
-	$('#detailedScenarios').hide();
-	$('#selectScenarioA').val(4);
-	$('#selectScenarioB').val(5);
-	compareScenarioA();
-	compareScenarioB();
-	$('#comparisonScenarios').show();
-}
-
-function compareScenarioA(){
-	$('#compareScenarioA').html(
-		$('#displayInv' + document.getElementById("selectScenarioA").value).html()
-	);
-	displayGraphCompare(getInv(document.getElementById("selectScenarioA").value), getInv(document.getElementById("selectScenarioB").value));	
-}
-
-function compareScenarioB(){
-	$('#compareScenarioB').html(
-		$('#displayInv' + document.getElementById("selectScenarioB").value).html()
-	);
-	displayGraphCompare(getInv(document.getElementById("selectScenarioA").value), getInv(document.getElementById("selectScenarioB").value));	
-}
-
-function displayGraph(){
-
-	var numYears = parseInt(inv1.numYears);
-
-	var ctxInv4 = document.getElementById('chartInv4').getContext('2d');
-	var ctxInv4Income = document.getElementById('chartInv4Income').getContext('2d');
+function setSharePrice(sharePrice, position, scenarioNumber){
 	
-	var ctxInv5 = document.getElementById('chartInv5').getContext('2d');
-	var ctxInv5Income = document.getElementById('chartInv5Income').getContext('2d');
+	var investment = getInvestment(scenarioNumber);
 	
-	if(chartInv4){
-		chartInv4.destroy();
-	}
-	if(chartInv4Income){
-		chartInv4Income.destroy();
+	if(position == 0){
+		investment.initialSharePrice = sharePrice;
 	}
 	
-	if(chartInv5){
-		chartInv5.destroy();
+	investment.sharePriceList[position] = sharePrice;
+	investment.performStrategy();
+	
+	$('#detailedViewInvestment' + scenarioNumber).html(getDetailedView(investment, scenarioNumber));
+	$('#comparisonViewInvestment' + scenarioNumber).html(getComparisonView(investment, scenarioNumber));
+	setScenarioA();
+	setScenarioB();
+	setCharts();
+}
+
+// For IE: input blur on Enter
+function checkSetSharePriceEnter(event, sharePrice, position, scenarioNumber){
+	if(event.keyCode == 13 || event.which == 13){
+		event.currentTarget.blur();
 	}
-	if(chartInv5Income){
-		chartInv5Income.destroy();
+}
+
+
+function adjustRates(scenarioNumber){
+	
+	var investment = getInvestment(scenarioNumber);
+	
+	var adjustDividendYield = $('#adjustDividendYieldInput').val().replace(/([%]|[,]|[ ])+/g, '');
+	var adjustDividendGrowthRate = $('#adjustDividendGrowthRateInput').val().replace(/([%]|[,]|[ ])+/g, '');
+	
+	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
+	if(!adjustDividendYield.match(rex)){
+		alert('Invalid Input - Dividend Yield');
+		return false;
+	}
+	if(!adjustDividendGrowthRate.match(rex)){
+		alert('Invalid Input - Dividend Growth Rate');
+		return false;
 	}
 	
-	// chart Inv 4
-	chartInv4 = new Chart(ctxInv4, {
+	$('#modalAdjustRates').modal('toggle');
+		
+	adjustDividendYield = adjustDividendYield * 0.01;
+	adjustDividendGrowthRate = adjustDividendGrowthRate * 0.01;
+	
+	investment.dividendYield = adjustDividendYield;
+	investment.dividendGrowthRate = adjustDividendGrowthRate;
+	investment.performStrategy();
+	
+	$('#detailedViewInvestment' + scenarioNumber).html(getDetailedView(investment, scenarioNumber));
+	$('#comparisonViewInvestment' + scenarioNumber).html(getComparisonView(investment, scenarioNumber));
+	setScenarioA();
+	setScenarioB();
+	setCharts();
+	
+	return false;
+}
+
+function getAdjustRatesForm(scenarioNumber){
+	
+	var investment = getInvestment(scenarioNumber);
+	
+	var html = "";
+	
+	html += "<form id='adjustRatesForm' onsubmit='return adjustRates(" + scenarioNumber + ")'>";
+	
+	html += "<p>Dividend Yield : <input id='adjustDividendYieldInput' value='" + parsePercentage(investment.dividendYield * 100) + "'></input></p>";
+	html += "<p>Dividend Growth Rate : <input id='adjustDividendGrowthRateInput' value='" + parsePercentage(investment.dividendGrowthRate * 100) + "'></input></p>";
+	
+	html += "<input type='submit' value='Submit'></input>";
+	
+	html += "</form>";
+	
+	$('#adjustRatesView').html(html);
+}
+
+function getDetailedView(investment, scenarioNumber){
+		
+		var html = "";
+		
+		// Title
+		html += "<h2>" + getInvestmentTitle(investment, scenarioNumber) + "</h2>";
+		
+		// Allow user to change: Dividend Yield, and Dividend Growth Rate
+		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustRates' onclick='getAdjustRatesForm(" + scenarioNumber + ")'>Adjust Percentages</button> <br/>";
+		
+		html += "<table class='table-striped'>";
+		
+		// Display column headers 
+		html += "<tr>";
+		html += "<th rowspan=2>Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Additional<br/>Shares<br/>Purchased</th> <th rowspan=2>Value</th>  <th rowspan=2>Income</th> <th rowspan=2>Yield *</th> <th rowspan=2>Cumulative<br/>Income</th> <th colspan=2>Account Value</th>";
+		html += "</tr>";
+		html += "<tr>";
+		html += "<th>Start of Year</th> <th>End of Year</th>";
+		html += "</tr>";
+	
+		for(var i = 0 ; i < investment.yearsInvested ; i++){
+			html += "<tr>";
+			
+			// Year
+			html += "<td>" + (i + 1) + "</td>";
+			
+			// Share Price
+			if(scenarioNumber == 3 || scenarioNumber == 4){
+				html += "<td>$<input onblur='setSharePrice(this.value," + i + "," + scenarioNumber + ")' value='" + parseCommas(parseFloat(investment.sharePriceList[i]).toFixed(2)) + "' size=6 onkeypress='checkSetSharePriceEnter(event, this.value," + i + "," + scenarioNumber + ")'></input></td>";
+			} else {
+				html += "<td>" + parseCurrency(investment.sharePriceList[i]) + "</td>";
+			}
+			
+			// Number of Shares
+			html += "<td>" + parseInt(investment.data.numberOfSharesList[i]) + "</td>";
+	
+			// Additional Shares Purchased
+			html += "<td style='font-weight: bold; color: #009900; background-color: #ffffb3'>" + parseInt(investment.data.additionalSharesPurchasedList[i]) + "</td>";
+			
+			// Account Value
+			var accountValue = investment.data.accountValueList[i];
+			if(accountValue < investment.initialInvestment){
+				html += "<td style='color: red'>";
+			} else {
+				html += "<td>";
+			}
+			html += parseCurrency(accountValue) + "</td>";
+			
+			// Income
+			html += "<td style='font-weight: bold; background-color: #ffffb3'>" + parseCurrency(investment.data.incomeList[i]) + "</td>";
+			
+			// Yield *
+			html += "<td>" + parsePercentage(investment.data.yieldList[i] * 100) + "</td>";
+			
+			// Cumulative Income
+			html += "<td>" + parseCurrency(investment.data.cumulativeIncomeList[i]) + "</td>";
+			
+			// Account Value (Start of Year)
+			var accountValueStart = investment.data.accountValueStartList[i];	
+			if(accountValueStart < investment.initialInvestment){
+				html += "<td style='color: red'><b>";
+			} else {
+				html += "<td><b>";
+			}	
+			html += parseCurrency(accountValueStart) + "</b></td>";
+			
+			// Account Value (End of Year)
+			var accountValueEnd = investment.data.accountValueEndList[i];
+			if(accountValueEnd < investment.initialInvestment){
+				html += "<td style='color: red'><b>";
+			} else {
+				html += "<td><b>";
+			}
+			html += parseCurrency(accountValueEnd) + "</b></td>";
+			
+			html += "</tr>";
+		}
+		
+		// Display column headers: Total Shares Purchased and Total Income Paid
+		html +=" <tr>";
+		html += "<th colspan=3></th>";
+		html += "<th>Total<br/>Shares<br/>Purchased</th>";
+		html += "<th colspan=1></th>";
+		html += "<th>Total<br/>Income<br/>Paid</th>";
+		html += "<th colspan=4></th>";
+		html += "</tr>";
+		
+		// Display values for Total Shares Purchased and Total Income Paid
+		html +="<tr>";
+		html += "<td colspan=3></th>";
+		html += "<td style='color: #009900; background-color: #ffffb3'><b>" + parseInt(investment.getTotalSharesPurchased()) + "</b></td>";
+		html += "<td colspan=1></th>";
+		html += "<td style='background-color: #ffffb3'><b>" + parseCurrency(investment.getTotalIncomePaid()) + "</b></td>";
+		html += "<td colspan=4></td>";
+		html += "</tr>";
+		
+		html += "</table>";
+		
+		html += "<p class='smallTxt'>* : Based on Initial Investment</p>";
+		html += "<br/>";
+		
+		html += "<div class='container-fluid text-center'>";
+		
+		// Net Total Return
+		html += "<div class='col-lg-4'>Net Total Return: <b>" + parsePercentage(investment.getNetTotalReturn() * 100) + " (" + parsePercentage(investment.getNetTotalReturnCompounded() * 100) + " Compound)</b></div>";
+		
+		// Income Growth
+		html += "<div class='col-lg-2'>Income Growth: <b>" + parsePercentage(investment.getIncomeGrowth() * 100) + "</b></div>";
+		
+		
+		// Income Paid, Wealth Created, and Net Profit
+		html += "<div class='col-lg-6'>";
+		html += "Income Paid: <b>" + parseCurrency(investment.getTotalIncomePaid()) + "</b>";	
+		html += " + ";
+		html += "Wealth Created: <b>" + parseCurrency(investment.getWealthCreated()) + "</b>";
+		html += " = ";
+		html += "Net Profit: <b>" + parseCurrency(investment.getNetProfit()) + "</b>";
+		html += "</div>";
+		
+		html += "</div>";
+		
+		return html;
+}
+
+function getComparisonView(investment, scenarioNumber){
+		
+		var html = "";
+		
+		// Title
+		html += "<h2>" + getInvestmentTitle(investment, scenarioNumber) + "</h2>";
+		
+		// Allow user to change: Dividend Yield, and Dividend Growth Rate
+		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustRates' onclick='getAdjustRatesForm(" + scenarioNumber + ")'>Adjust Percentages</button> <br/>";
+		
+		html += "<table class='table-striped'>";
+		
+		// Display column headers 
+		html += "<tr>";
+		html += "<th rowspan=2>Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Income</th> <th rowspan=2>Yield *</th> <th colspan=2>Account Value</th>";
+		html += "</tr>";
+		html += "<tr>";
+		html += "<th>Start of<br/>Year</th> <th>End of<br/>Year</th>";
+		html += "</tr>";
+	
+		for(var i = 0 ; i < investment.yearsInvested ; i++){
+			html += "<tr>";
+			
+			// Year
+			html += "<td>" + (i + 1) + "</td>";
+			
+			// Share Price
+			if(scenarioNumber == 3 || scenarioNumber == 4){
+				html += "<td>$<input onblur='setSharePrice(this.value," + i + "," + scenarioNumber + ")' value='" + parseCommas(parseFloat(investment.sharePriceList[i]).toFixed(2)) + "' size=6 onkeypress='checkSetSharePriceEnter(event, this.value," + i + "," + scenarioNumber + ")'></input></td>";
+			} else {
+				html += "<td>" + parseCurrency(investment.sharePriceList[i]) + "</td>";
+			}
+			
+			// Number of Shares
+			html += "<td>" + parseInt(investment.data.numberOfSharesList[i]) + "</td>";
+	
+			// Income
+			html += "<td style='font-weight: bold; background-color: #ffffb3'>" + parseCurrency(investment.data.incomeList[i]) + "</td>";
+			
+			// Yield *
+			html += "<td>" + parsePercentage(investment.data.yieldList[i] * 100) + "</td>";
+			
+			// Account Value (Start of Year)
+			var accountValueStart = investment.data.accountValueStartList[i];	
+			if(accountValueStart < investment.initialInvestment){
+				html += "<td style='color: red'><b>";
+			} else {
+				html += "<td><b>";
+			}	
+			html += parseCurrency(accountValueStart) + "</b></td>";
+			
+			// Account Value (End of Year)
+			var accountValueEnd = investment.data.accountValueEndList[i];
+			if(accountValueEnd < investment.initialInvestment){
+				html += "<td style='color: red'><b>";
+			} else {
+				html += "<td><b>";
+			}
+			html += parseCurrency(accountValueEnd) + "</b></td>";
+			
+			html += "</tr>";
+		}
+		
+		// Display column headers: Total Shares Purchased and Total Income Paid
+		html +=" <tr>";
+		html += "<th colspan=3></th>";
+		html += "<th>Total<br/>Income<br/>Paid</th>";
+		html += "<th colspan=6></th>";
+		html += "</tr>";
+		
+		// Display values for Total Shares Purchased and Total Income Paid
+		html +="<tr>";
+		html += "<td colspan=3></th>";
+		html += "<td style='background-color: #ffffb3'><b>" + parseCurrency(investment.getTotalIncomePaid()) + "</b></td>";
+		html += "<td colspan=6></td>";
+		html += "</tr>";
+		
+		html += "</table>";
+		
+		html += "<p class='smallTxt'>* : Based on Initial Investment</p>";
+		html += "<br/>";
+		
+		// Net Total Return
+		html += "<p>Net Total Return: <b>" + parsePercentage(investment.getNetTotalReturn() * 100) + " (" + parsePercentage(investment.getNetTotalReturnCompounded() * 100) + " Compound)</b></p>";
+		html += "<br/>";
+		
+		// Income Growth
+		html += "<p>Income Growth: <b>" + parsePercentage(investment.getIncomeGrowth() * 100) + "</b><p>";
+		html += "<br/>";
+		
+		// Income Paid, Wealth Created, and Net Profit
+		html += "<p>Income Paid: <b>" + parseCurrency(investment.getTotalIncomePaid()) + "</b></p>";	
+		html += "<p>Wealth Created: <b>" + parseCurrency(investment.getWealthCreated()) + "</b></p>";
+		html += "<p>Net Profit: <b>" + parseCurrency(investment.getNetProfit()) + "</b></p>";
+		
+		return html;
+}
+
+function setCharts(){
+	
+	if(chartInvestment3){
+		chartInvestment3.destroy();
+	}
+	if(chartInvestment4){
+		chartInvestment4.destroy();
+	}
+	
+	chartInvestment3 = getChart(scenarioNumber=3);
+	chartInvestment4 = getChart(scenarioNumber=4);
+	
+	if(chartIncomeInvestment3){
+		chartIncomeInvestment3.destroy();
+	}
+	if(chartIncomeInvestment4){
+		chartIncomeInvestment4.destroy();
+	}
+	
+	chartIncomeInvestment3 = getChartIncome(scenarioNumber=3);
+	chartIncomeInvestment4 = getChartIncome(scenarioNumber=4);
+}
+
+function getChart(scenarioNumber){
+
+	var investment = getInvestment(scenarioNumber);
+	var ctx = document.getElementById('chartInvestment' + scenarioNumber).getContext('2d');
+	
+	return new Chart(ctx, {
 		type: 'line',
 		data: {
-			labels: range(1, 1 + numYears),
+			labels: range(1, 1 + investment.yearsInvested),
 			datasets: [
 			{
 				label: 'Value',
 				borderColor: 'rgb(0, 255, 0)',
-				data: inv4.getChangeInInvs(),
+				data: investment.data.accountValueEndList,
 				yAxisID: "y-axis-0",
 				backgroundColor: 'rgba(0, 255, 0, 0.4)',
 				fill: "1"
 			},{
 				label: 'Initial Value' ,
 				borderColor: 'rgb(0, 0, 255)' ,
-				data: fillList(inv4.initInvest, inv4.numYears),
+				data: fillList(investment.initialInvestment, investment.yearsInvested),
 				yAxisID: "y-axis-0",
 				backgroundColor: 'rgba(0, 0, 255, 0.6)',
 				fill: true
@@ -545,7 +833,7 @@ function displayGraph(){
 		options: {
 		    title: {
 				display: true,
-				text: 'Scenario 4 - Investment Over Time'
+				text: 'Scenario ' + scenarioNumber + ' - Investment Over Time'
 			},
 			scales: {
 				yAxes: 
@@ -569,22 +857,27 @@ function displayGraph(){
 			}
 		}
 	});
+}
+
+function getChartIncome(scenarioNumber){
+
+	var investment = getInvestment(scenarioNumber);
+	var ctx = document.getElementById('chartIncomeInvestment' + scenarioNumber).getContext('2d');
 	
-	// chart Inv 4 Income
-	chartInv4Income = new Chart(ctxInv4Income, {
+	return new Chart(ctx, {
 		type: 'bar',
 		data: {
-			labels: range(1, 1 + numYears),
+			labels: range(1, 1 + investment.yearsInvested),
 			datasets: [{
 				label: 'Income',
 				borderColor: 'rgb(102, 217, 255)',
-				data: inv4.dividends,
+				data: investment.data.incomeList,
 				yAxisID: "y-axis-1",
 				backgroundColor: 'rgba(102, 217, 255, 0.6)',
 			},{
 				label: 'Cumulative Income',
 				borderColor: 'rgb(0, 0, 128)',
-				data: inv4.getTotalDividends(),
+				data: investment.data.cumulativeIncomeList,
 				yAxisID: "y-axis-1",
 				backgroundColor: 'rgba(0, 0, 128, 0.6)',
 			}]
@@ -592,7 +885,7 @@ function displayGraph(){
 		options: {
 			title: {
 				display: true,
-				text: 'Scenario 4 - Income Over Time'
+				text: 'Scenario ' + scenarioNumber + ' - Income Over Time'
 			},
 			scales: {
 				xAxes: [{
@@ -620,151 +913,53 @@ function displayGraph(){
 			}
 		}
 	});
-	
-	
-	// chart Inv 5
-	chartInv5 = new Chart(ctxInv5, {
-		type: 'line',
-		data: {
-			labels: range(1, 1 + numYears),
-			datasets: [
-			{
-				label: 'Value',
-				borderColor: 'rgb(0, 255, 0)',
-				data: inv5.getChangeInInvs(),
-				yAxisID: "y-axis-0",
-				backgroundColor: 'rgba(0, 255, 0, 0.4)',
-				fill: "1"
-			},{
-				label: 'Initial Value' ,
-				borderColor: 'rgb(0, 0, 255)' ,
-				data: fillList(inv5.initInvest, inv5.numYears),
-				yAxisID: "y-axis-0",
-				backgroundColor: 'rgba(0, 0, 255, 0.6)',
-				fill: true
-			}]
-		},
-		options: {
-		    title: {
-				display: true,
-				text: 'Scenario 5 - Investment Over Time'
-			},
-			scales: {
-				yAxes: 
-				[
-					{
-						position: "left",
-						"id": "y-axis-0",
-						ticks:{
-							min: 0,
-							// https://stackoverflow.com/questions/28523394/charts-js-formatting-y-axis-with-both-currency-and-thousands-separator
-							callback: function(value, index, values) {
-							  if(parseInt(value) >= 1000){
-								return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-							  } else {
-								return '$' + value;
-							  }
-							}
-						},
-					}
-				]
-			}
-		}
-	});
-	
-	// chart Inv 5 Income
-	chartInv5Income = new Chart(ctxInv5Income, {
-		type: 'bar',
-		data: {
-			labels: range(1, 1 + numYears),
-			datasets: [{
-				label: 'Income',
-				borderColor: 'rgb(102, 217, 255)',
-				data: inv5.dividends,
-				yAxisID: "y-axis-1",
-				backgroundColor: 'rgba(102, 217, 255, 0.6)',
-			},{
-				label: 'Cumulative Income',
-				borderColor: 'rgb(0, 0, 128)',
-				data: inv5.getTotalDividends(),
-				yAxisID: "y-axis-1",
-				backgroundColor: 'rgba(0, 0, 128, 0.6)',
-			}]
-		},
-		options: {
-			title: {
-				display: true,
-				text: 'Scenario 5 - Income Over Time'
-			},
-			scales: {
-				xAxes: [{
-						stacked: true,
-					}
-				],
-				yAxes:
-				[
-					{
-						position: "left",
-						"id": "y-axis-1",
-						ticks:{
-							min: 0, 
-							// https://stackoverflow.com/questions/28523394/charts-js-formatting-y-axis-with-both-currency-and-thousands-separator
-							callback: function(value, index, values) {
-							  if(parseInt(value) >= 1000){
-								return '$' + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-							  } else {
-								return '$' + value;
-							  }
-							}
-						},
-					}
-				]
-			}
-		}
-	});
 }
 
-function displayGraphCompare(invFirst, invSecond){
+function setChartCompare(scenarioNumberA, scenarioNumberB){
 	
-	var numYears = parseInt(inv1.numYears);
-	
-	if(chartCompare){
-		chartCompare.destroy();
+	if(chartCompareInvestments){
+		chartCompareInvestments.destroy();
 	}
 	
-	var ctxCompare = document.getElementById('chartCompare').getContext('2d');
+	chartCompareInvestments = getChartCompare(scenarioNumberA, scenarioNumberB);
+}
+
+function getChartCompare(scenarioNumberA, scenarioNumberB){
 	
-	// chart Compare
-	chartCompare = new Chart(ctxCompare, {
+	var investmentA = getInvestment(scenarioNumberA);
+	var investmentB = getInvestment(scenarioNumberB);
+	var ctx = document.getElementById('chartCompareInvestments').getContext('2d');
+
+	return new Chart(ctx, {
 		type: 'bar',
 		data: {
-			labels: range(1, 1 + numYears),
+			labels: range(1, 1 + investmentA.yearsInvested),
 			datasets: [{
 				type: 'line',
-				label: 'Scenario ' + invFirst.invType + ' - Value',
+				label: 'Scenario ' + scenarioNumberA + ' - Value',
 				borderColor: 'rgb(255, 0, 0)',
-				data: invFirst.getChangeInInvs(),
+				data: investmentA.data.accountValueEndList,
 				yAxisID: "y-axis-0",
 				backgroundColor: 'rgba(255, 0, 0, 0.6)',
 				fill: false
 			},{
-				label: 'Scenario ' + invFirst.invType + ' - Additional Shares Purchased',
+				label: 'Scenario ' + scenarioNumberA + ' - Additional Shares Purchased',
 				borderColor: 'rgb(255, 0, 0)',
-				data: invFirst.getAddedShares(),
+				data: investmentA.data.additionalSharesPurchasedList,
 				yAxisID: "y-axis-1",
 				backgroundColor: 'rgba(255, 0, 0, 0.6)',
 			},{
 				type: 'line',
-				label: 'Scenario ' + invSecond.invType + ' - Value',
+				label: 'Scenario ' + scenarioNumberB + ' - Value',
 				borderColor: 'rgb(0, 0, 255)',
-				data: invSecond.getChangeInInvs(),
+				data: investmentB.data.accountValueEndList,
 				yAxisID: "y-axis-0",
 				backgroundColor: 'rgba(0, 0, 255, 0.6)',
 				fill: false,
 			},{
-				label: 'Scenario ' + invSecond.invType + ' - Additional Shares Purchased',
+				label: 'Scenario ' + scenarioNumberB + ' - Additional Shares Purchased',
 				borderColor: 'rgb(0, 0, 255)',
-				data: invSecond.getAddedShares(),
+				data: investmentB.data.additionalSharesPurchasedList,
 				yAxisID: "y-axis-1",
 				backgroundColor: 'rgba(0, 0, 255, 0.6)',
 			}]
@@ -801,8 +996,18 @@ function displayGraphCompare(invFirst, invSecond){
 						"id": "y-axis-1",
 						ticks:{
 							min: 0, 
-							//max: Math.pow(10, parseInt(Math.max(invFirst.getAddedShares()[numYears - 1], invSecond.getAddedShares()[numYears - 1])).toString().length)
-							max: Math.round( ( Math.max( Math.max.apply(null, invFirst.getAddedShares()), Math.max.apply(null, invSecond.getAddedShares()) ) * Math.ceil( Math.max( invFirst.getChangeInInvs()[numYears - 1], invSecond.getChangeInInvs()[numYears - 1] ) / invFirst.initInvest ) ) / 10 ) * 10 
+							max: (
+								Math.round(
+									(
+										Math.max(
+											Math.max.apply(null, investmentA.data.additionalSharesPurchasedList), Math.max.apply(null, investmentB.data.additionalSharesPurchasedList)
+										) 
+									) * 
+									Math.ceil(
+										Math.max(maxOfList(investmentA.data.accountValueEndList), maxOfList(investmentB.data.accountValueEndList)) / investmentA.initialInvestment
+									) 
+								) / 10 
+							) * 10 
 						},
 					}
 				]
@@ -810,702 +1015,157 @@ function displayGraphCompare(invFirst, invSecond){
 		}
 	});
 	
-	
 }
 
-function adjustDisplayInv1() {
-	var divPercent = $('#divPercentInput1').val().replace(/([%]|[,]|[ ])+/g, '');
+function Investment(initialInvestment, initialSharePrice, dividendYield, dividendGrowthRate, yearsInvested, dividendsReinvested){
 
-	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
-	if(!divPercent.match(rex)){
-		alert('Invalid Input - Dividend Yield');
-		return false;
-	}
-
-	inv1.divPercent = divPercent;
-
-	inv1 = invCalc1(inv1);
-	$('#displayInv1').html(inv1.getHTML());
-	$('#displayDetailedInv1').html(inv1.getDetailedHTML());
-	$('#modalAdjustInv1').modal('toggle');
+	this.initialInvestment = initialInvestment;
+	this.initialSharePrice = initialSharePrice;
+	this.dividendYield = dividendYield;
+	this.dividendGrowthRate = dividendGrowthRate;
+	this.yearsInvested = yearsInvested;
 	
-	displayGraph();
-	compareScenarioA();
-	compareScenarioB();	
-	return false;
-}
-
-function adjustDisplayInv2() {
-	var divPercent = $('#divPercentInput2').val().replace(/([%]|[,]|[ ])+/g, '');
-
-	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
-	if(!divPercent.match(rex)){
-		alert('Invalid Input - Dividend Yield');
-		return false;
-	}
-
-	inv2.divPercent = divPercent;
-
-	inv2 = invCalc2(inv2);
-	$('#displayInv2').html(inv2.getHTML());
-	$('#displayDetailedInv2').html(inv2.getDetailedHTML());
-	$('#modalAdjustInv2').modal('toggle');
+	// True, if this investment is on the dividend reinvestment strategy
+	this.dividendsReinvested = dividendsReinvested;
 	
-	displayGraph();
-	compareScenarioA();
-	compareScenarioB();	
-	return false;
-}
-
-function adjustDisplayInv3() {
-	var divPercent = $('#divPercentInput3').val().replace(/([%]|[,]|[ ])+/g, '');
-	var divGrowthPercent = $('#divGrowthPercentInput3').val().replace(/([%]|[,]|[ ])+/g, '');
+	this.sharePriceList = fillList(this.initialSharePrice, this.yearsInvested);
 	
-	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
-	if(!divPercent.match(rex)){
-		alert('Invalid Input - Dividend Yield');
-		return false;
-	}
-	if(!divGrowthPercent.match(rex)){
-		alert('Invalid Input - Dividend Growth Rate');
-		return false;
-	}
+	this.data;
 	
-	inv3.divPercent = divPercent;
-	inv3.divGrowthPercent = divGrowthPercent;
-
-	inv3 = invCalc2(inv3);
-	$('#displayInv3').html(inv3.getHTML());
-	$('#displayDetailedInv3').html(inv3.getDetailedHTML());
-	$('#modalAdjustInv3').modal('toggle');
-	
-	displayGraph();
-	compareScenarioA();
-	compareScenarioB();	
-	return false;
-}
-
-function adjustDisplayInv4() {
-	var divPercent = $('#divPercentInput4').val().replace(/([%]|[,]|[ ])+/g, '');
-	var divGrowthPercent = $('#divGrowthPercentInput4').val().replace(/([%]|[,]|[ ])+/g, '');
-	
-	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
-	if(!divPercent.match(rex)){
-		alert('Invalid Input - Dividend Yield');
-		return false;
-	}
-	if(!divGrowthPercent.match(rex)){
-		alert('Invalid Input - Dividend Growth Rate');
-		return false;
-	}
-	
-	inv4.divPercent = divPercent;
-	inv4.divGrowthPercent = divGrowthPercent;
-
-	inv4 = invCalc2(inv4);
-	$('#displayInv4').html(inv4.getHTML());
-	$('#displayDetailedInv4').html(inv4.getDetailedHTML());
-	$('#modalAdjustInv4').modal('toggle');
-	
-	displayGraph();
-	compareScenarioA();
-	compareScenarioB();	
-	return false;
-}
-
-function adjustDisplayInv5() {
-	var divPercent = $('#divPercentInput5').val().replace(/([%]|[,]|[ ])+/g, '');
-	var divGrowthPercent = $('#divGrowthPercentInput5').val().replace(/([%]|[,]|[ ])+/g, '');
-	
-	var rex = /^[0-9]+([.][0-9]+){0,1}$/ig;
-	if(!divPercent.match(rex)){
-		alert('Invalid Input - Dividend Yield');
-		return false;
-	}
-	if(!divGrowthPercent.match(rex)){
-		alert('Invalid Input - Dividend Growth Rate');
-		return false;
-	}
-	
-	inv5.divPercent = divPercent;
-	inv5.divGrowthPercent = divGrowthPercent;
-
-	inv5 = invCalc2(inv5);
-	$('#displayInv5').html(inv5.getHTML());
-	$('#displayDetailedInv5').html(inv5.getDetailedHTML());
-	$('#modalAdjustInv5').modal('toggle');
-	
-	displayGraph();
-	compareScenarioA();
-	compareScenarioB();	
-	return false;
-}
-
-function getAdjustFormHTML(inv){
-	
-	var html = "";
-	
-	var formID = 'adjustInvForm' + inv.invType;
-	var formOnSubmit = 'return adjustDisplayInv' + inv.invType + '()';
-	
-	html += "<form id='" + formID + "' onsubmit='" + formOnSubmit + "'>";
-		
-	var divPercentID = 'divPercentInput' + inv.invType; 
-	html += "<p>Dividend Yield : <input id='" + divPercentID + "' value='" + getPercentage(inv.divPercent) + "'></input></p>";
-
-	if(inv.invType == 3 || inv.invType == 4 || inv.invType == 5){
-			
-		var divGrowthPercentID = 'divGrowthPercentInput' + inv.invType;
-		html += "<p>Dividend Growth Rate : <input id='" + divGrowthPercentID + "' value='" + getPercentage(inv.divGrowthPercent) + "'></input></p>";
-	}
-	html += "<input type='submit' value='Submit'></input>";
-	html += "</form>";
-	
-	return html;
-}
-
-function invCalc1(inv){
-
-    inv.clearInvestVals();
-    inv.clearDividends();
-    inv.clearNumShares();
-	
-    var initInvest = inv.initInvest;
-    var initSharePrice = inv.initSharePrice;
-    var divPercent = inv.divPercent;
-    var numYears = inv.numYears;
-	
-    var currInvest = 0;
-	
-	for(var i = 0 ; i < numYears ; i++){
-	
-		// number of shares = initial investment / initial share price
-        inv.numShares.push(initInvest / initSharePrice);
-        
-		// current investment = current share price * current number of shares
-        currInvest = inv.sharePrices[i] * inv.numShares[i];
-        inv.investVals.push(currInvest);
-        
-		// dividend is a percentage of (initial share price * current number of shares)
-        inv.dividends.push((initSharePrice * inv.numShares[i]) * (divPercent * 0.01));
-    }
-
-    return inv;
-};
-
-function invCalc2(inv){
-    
-    inv.clearInvestVals();
-    inv.clearDividends();
-    inv.clearNumShares();
-    
-	var initInvest = inv.initInvest;
-    var initSharePrice = inv.initSharePrice;
-    var divPercent = inv.divPercent;
-    var divGrowthPercent = inv.divGrowthPercent;
-	var numYears = inv.numYears;
-        
-    var currInvest = 0;
-	
-	for(var i = 0 ; i < numYears ; i++){
-        
-        if(i == 0){
-            // number of shares = initial investment / initial share price
-            inv.numShares.push(initInvest / initSharePrice);
-        } else {
-            // number of shares = previous number of shares + (previous dividend / current share price)
-            inv.numShares.push(inv.numShares[i - 1] + (inv.dividends[i - 1] / inv.sharePrices[i]));
-        }
-		
-        // current investment = current share price * current number of shares
-        currInvest = inv.sharePrices[i] * inv.numShares[i];    
-        inv.investVals.push(currInvest);
-        
-        if(i == 0){
-            // dividend is a percentage of (initial share price * current number of shares)
-            inv.dividends.push((initSharePrice * inv.numShares[i]) * (divPercent * 0.01));
-        } else{
-            // dividend is a percentage of (initial share price * current number of shares) + growth percentage
-            inv.dividends.push(((initSharePrice * inv.numShares[i]) * (divPercent * 0.01)) * (1 + (divGrowthPercent * 0.01)));
-		}
-	}
-	
-    return inv;
-}
-
-function changeInitSharePrice(sharePrice, position, invType){
-
-	sharePrice = sharePrice.replace(/([$]|[,]|[ ])+/g, '');
-	
-	if(invType == 4){
-	
-		inv4.initSharePrice = sharePrice;
-		inv4.setSharePrice(sharePrice, position);
-		
-		inv4 = invCalc2(inv4);
-		$('#displayInv4').html(inv4.getHTML());
-		$('#displayDetailedInv4').html(inv4.getDetailedHTML());	
-		displayGraph();
-		compareScenarioA();
-		compareScenarioB();	
-	} else if(invType == 5){
-	
-		inv5.initSharePrice = sharePrice;
-		inv5.setSharePrice(sharePrice, position);
-		
-		inv5 = invCalc2(inv5);
-		$('#displayInv5').html(inv5.getHTML());
-		$('#displayDetailedInv5').html(inv5.getDetailedHTML());	
-		displayGraph();
-		compareScenarioA();
-		compareScenarioB();	
-	}
-}
-
-function changeSharePrice(sharePrice, position, invType){
-	
-	sharePrice = sharePrice.replace(/([$]|[,]|[ ])+/g, '');
-	
-	if(invType == 4){
-	
-		inv4.setSharePrice(sharePrice, position);
-		
-		inv4 = invCalc2(inv4);
-		$('#displayInv4').html(inv4.getHTML());
-		$('#displayDetailedInv4').html(inv4.getDetailedHTML());
-		displayGraph();
-		compareScenarioA();
-		compareScenarioB();
-	} else if(invType == 5){
-	
-		inv5.setSharePrice(sharePrice, position);
-		
-		inv5 = invCalc2(inv5);
-		$('#displayInv5').html(inv5.getHTML());
-		$('#displayDetailedInv5').html(inv5.getDetailedHTML());
-		displayGraph();
-		compareScenarioA();
-		compareScenarioB();
-	}
-}
-
-function Investment(invType, initInvest, initSharePrice, divPercent, divGrowthPercent, numYears){
- 
-	this.invType = invType;
-    this.initInvest = initInvest;
-    this.initSharePrice = initSharePrice;
-    this.divPercent = divPercent;
-    this.divGrowthPercent = divGrowthPercent;
-    this.numYears = numYears;
-    this.sharePrices = fillList(initSharePrice, numYears);
-    this.investVals = [];
-    this.dividends = [];
-    this.numShares = [];
-	
-	this.getAddedShares = function(){
-		var addedShares = [];
-		for(var i = 0 ; i < this.numYears ; i++){
+	this.performCashPaidStrategy = function(){
+		//console.log('cash paid strategy called!');
+		this.data = new InvestmentData();
+		for(var i = 0 ; i < this.yearsInvested ; i++){
+			// Number of Shares
+			this.data.numberOfSharesList.push(this.initialInvestment / this.initialSharePrice);
+			// Additional Shares Purchased
+			this.data.additionalSharesPurchasedList.push(0);
+			// Income
 			if(i == 0){
-				addedShares.push(0);
+				this.data.incomeList.push(this.initialSharePrice * this.data.numberOfSharesList[i] * this.dividendYield);
 			} else {
-				addedShares.push(parseInt(this.numShares[i] - this.numShares[i - 1]));
+				this.data.incomeList.push(this.data.incomeList[i - 1] * (1 + this.dividendGrowthRate));
 			}
-		}
-		return addedShares;
-	};
-	this.getTotalAddedShares = function(){
-		return this.numShares[numYears - 1] - this.numShares[0];
-	};
-	this.getTotalDividend = function(numYears){
-		var totalDividend = 0;
-		for(var i = 0 ; i < numYears ; i++){
-			totalDividend += this.dividends[i];
-		}
-		return totalDividend;
-	};
-	this.getTotalDividends = function(){
-		var totalDividends = [];
-		for(var i = 0 ; i < this.numYears ; i++){
-			totalDividends.push(this.getTotalDividend(i + 1));
-		}
-		return totalDividends;
-	};
-	this.getTotalDividendsPlusInitInvest = function(){
-		var totalDividends = [];
-		for(var i = 0 ; i < this.numYears ; i++){
-			totalDividends.push(this.getTotalDividend(i + 1) + this.investVals[0]);
-		}
-		return totalDividends;
-	};
-	this.getTotalDividendsPlusInitInvestStartOfYear = function(){
-		var totalDividends = [];
-		for(var i = 0 ; i < this.numYears ; i++){
+			// Cumulative Income
 			if(i == 0){
-				totalDividends.push(this.investVals[0]);
+				this.data.cumulativeIncomeList.push(this.data.incomeList[i]);
 			} else {
-				totalDividends.push(this.getTotalDividend(i + 1 - 1) + this.investVals[0]);
+				this.data.cumulativeIncomeList.push(this.data.incomeList[i] + this.data.cumulativeIncomeList[i - 1]);
 			}
+			// Yield *
+			this.data.yieldList.push(this.data.incomeList[i] / this.initialInvestment);			
+			// Account Value
+			this.data.accountValueList.push(this.sharePriceList[i] * this.data.numberOfSharesList[i]);
+			// Account Value - Start of Year
+			if(i == 0){
+				this.data.accountValueStartList.push(this.sharePriceList[i] * this.data.numberOfSharesList[i]);
+			} else {
+				this.data.accountValueStartList.push(this.sharePriceList[i] * this.data.numberOfSharesList[i] + this.data.cumulativeIncomeList[i - 1]);
+			}
+			// Account Value - End of Year
+			this.data.accountValueEndList.push(this.sharePriceList[i] * this.data.numberOfSharesList[i] + this.data.cumulativeIncomeList[i]);
 		}
-		return totalDividends;
-	};
-	this.getROI = function(){
-		if(this.invType == 1){
-			return ((this.investVals[numYears - 1] + this.getTotalDividend(this.numYears)) / this.investVals[0] - 1) * 100;
-		} else {
-			return ((this.investVals[numYears - 1] + this.dividends[numYears - 1]) / this.investVals[0] - 1) * 100;
-		}
-	};
-	this.getAnnROI = function(){
-		if(this.invType == 1){
-			return (Math.pow((this.investVals[numYears - 1] + this.getTotalDividend(this.numYears)) / this.investVals[0], (1 / numYears)) - 1) * 100;
-		} else {
-			return (Math.pow((this.investVals[numYears - 1] + this.dividends[numYears - 1]) / this.investVals[0], (1 / numYears)) - 1) * 100;
-		}
-	};
-	this.getChangeInInv = function(numYears){
-		if(this.invType == 1){
-			return this.investVals[numYears - 1] + this.getTotalDividend(numYears);
-		} else {
-			return this.investVals[numYears - 1] + this.dividends[numYears - 1];
-		}
-	};
-	this.getChangeInInvs = function(){
-		var changeInInvs = [];
-		for(var i = 0 ; i < this.numYears ; i++){
-			changeInInvs.push(this.getChangeInInv(i + 1));
-		}
-		return changeInInvs;
-	};
-	this.setSharePrice = function(sharePrice, position){
-		this.sharePrices[position] = sharePrice;
-	};
-	this.clearInvestVals = function(){
-		this.investVals = [];
-	};
-	this.clearDividends = function(){
-		this.dividends = [];
-	};
-    this.clearNumShares = function(){
-		this.numShares = [];
-	};
-	this.getTitle = function(){
-		var title = "<span style='font-size: 30px;'>Scenario " + this.invType + "</span> :<br/>";
-		if(this.invType == 1){
-			title += "" + getPercentage(this.divPercent) + " Dividend (Cash Paid)<br/>No Growth<br/>No Volatility";
-		} else if(this.invType == 2){
-			title += "" + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>No Growth<br/>No Volatility";
-		} else if(this.invType == 3){
-			title += "" + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>" + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>No Volatility";
-		} else {
-			title += "" + getPercentage(this.divPercent) + " Dividend (Dividends Reinvested)<br/>" + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate<br/>Share Price Volatility</li></ul>";
-		}
-		return title;
-	};	
-	this.getHTML = function(){
-		var html = "";
-		
-		html += "<h2>" + this.getTitle() + "</h2>";
-		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustInv" + this.invType + "'>Adjust Percentages</button> <br/>";
-		
-		html += "<table id='nonDetailedTable' class='table-striped'>";
-		
-		// Value == investVals
-		// Income == Dividends
-		// Cumulative Return == Total Dividends Received as of N Years
-		
-		html += "<tr>";
-		html += "<th rowspan=2>&nbsp;&nbsp;Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Income</th> <th rowspan=2>Yield *</th> <th colspan=2>Account Value</th>";
-		html += "</tr>";
-		
-		html += "<tr>";
-		html += "<th>Start of<br/>Year</th> <th>End of<br/>Year</th>";
-		html += "</tr>";
+	}	
 	
-		for(var i = 0 ; i < this.numYears ; i++){
-			
-			html += "<tr>";
-			html += "<td>" + (i + 1) + "</td>";
-			
-			if(i == 0 && (this.invType == 4 || this.invType == 5)){
-				
-				var changeInitSharePrice = 'changeInitSharePrice(this.value, ' + i + ',' + this.invType + ')';
-				html += "<td>$<input onchange='" + changeInitSharePrice + "' value='" + numWithCommas(parseFloat(this.sharePrices[i]).toFixed(2)) + "' size=6></input></td>";
-			} else if(this.invType == 4 || this.invType == 5){
-				
-				var changeSharePrice = 'changeSharePrice(this.value, ' + i + ',' + this.invType + ')';
-				html += "<td>$<input onchange='" + changeSharePrice + "' value='" + numWithCommas(parseFloat(this.sharePrices[i]).toFixed(2)) + "' size=6></input></td>";
+	this.performDividendReinvestmentStrategy = function(){
+		//console.log('dividend reinvestment strategy called!');
+		this.data = new InvestmentData();
+		for(var i = 0 ; i < this.yearsInvested ; i++){
+			// Number of Shares
+			if(i == 0){
+				this.data.numberOfSharesList.push(this.initialInvestment / this.initialSharePrice);
 			} else {
-				
-				html += "<td>" + getCurrency(this.sharePrices[i])+ "</td>";
+				this.data.numberOfSharesList.push(this.data.numberOfSharesList[i - 1] + (this.data.incomeList[i - 1] / this.sharePriceList[i]));
 			}
-			
-			html += "<td>" + parseInt(this.numShares[i]) + "</td>";
-			
-			html += "<td style='background-color: #ffffb3'><b>" + getCurrency(this.dividends[i]) + "</b></td>";
-			
-			// yield *
-			html += "<td>" + getPercentage((this.dividends[i] / this.investVals[0]) * 100) + "</td>";
-			
-			if(i > 0 && this.invType == 1){
-			
-				var yearStartAccountValue = this.investVals[i] + this.getTotalDividend(i);
-				
-				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'><b>";
-				} else {
-					html += "<td><b>";
-				}
-				
-				html += getCurrency(yearStartAccountValue) + "</b></td>";
+			// Additional Shares Purchased
+			if(i == 0){
+				this.data.additionalSharesPurchasedList.push(0);
 			} else {
-				
-				var yearStartAccountValue = this.investVals[i];
-				
-				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'><b>";
-				} else {
-					html += "<td><b>";
-				}
-				
-				html += getCurrency(yearStartAccountValue) + "</b></td>";
+				this.data.additionalSharesPurchasedList.push(this.data.numberOfSharesList[i] - this.data.numberOfSharesList[i - 1]);
 			}
-			
-			var yearEndAccountValue = this.getChangeInInv(i + 1);
-			
-			if(yearEndAccountValue < this.initInvest){
-				html += "<td style='color: red'><b>";
+			// Income
+			if(i == 0){
+				this.data.incomeList.push(this.initialSharePrice * this.data.numberOfSharesList[i] * this.dividendYield);
 			} else {
-				html += "<td><b>";
+				// Might be wrong..
+				//this.data.incomeList.push(this.initialSharePrice * this.data.numberOfSharesList[i] * this.dividendYield * (1 + this.dividendGrowthRate));
+				// Might be correct..
+				this.data.incomeList.push(this.data.incomeList[i - 1] * (1 + this.dividendGrowthRate) + this.initialSharePrice * this.data.additionalSharesPurchasedList[i] * this.dividendYield);
 			}
-			
-			html += getCurrency(yearEndAccountValue) + "</b></td>";
-			
-			html += "</tr>";
+			// Cumulative Income
+			if(i == 0){
+				this.data.cumulativeIncomeList.push(this.data.incomeList[i]);
+			} else {
+				this.data.cumulativeIncomeList.push(this.data.incomeList[i] + this.data.cumulativeIncomeList[i - 1]);
+			}
+			// Yield *
+			this.data.yieldList.push(this.data.incomeList[i] / this.initialInvestment);
+			// Account Value
+			this.data.accountValueList.push(this.sharePriceList[i] * this.data.numberOfSharesList[i]);
+			// Account Value - Start of Year
+			this.data.accountValueStartList.push(this.sharePriceList[i] * this.data.numberOfSharesList[i]);
+			// Account Value - End of Year
+			this.data.accountValueEndList.push(this.sharePriceList[i] * this.data.numberOfSharesList[i] + this.data.incomeList[i]);
 		}
-		
-		html +=" <tr>";
-		html += "<th style='background-color: #14446c' colspan=3></th>";
-		html += "<th style='background-color: #14446c'>Total<br/>Income<br/>Paid</th>";
-		html += "<th style='background-color: #14446c' colspan=3></th>";
-		html += "</tr>";
-		
-		html +="<tr>";
-		html += "<td colspan=3></td>";
-		html += "<td style='background-color: #ffffb3;'><b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></td>";
-		html += "<td colspan=3></td>";
-		html += "</tr>";
-				
-		html += "</table>";
-					
-		html += "<p class='smallTxt'>* : Based on Initial Investment</p>";
+	}
 	
-		html += "<br/>";
-		html += "<p>Net Total Return: <b>" + getPercentage(this.getROI()) + " ("+ getPercentage(this.getAnnROI()) + " Compound)</b></p>";
-		
-		html += "<br/>";
-		html += "<p>Income Growth: <b>" + getPercentage(((this.dividends[this.numYears - 1] / this.dividends[0]) - 1) * 100) + "</b></p>";
-		
-		html += "<br/>";
-		html += "<p>Income Paid: <b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></p>";
-		
-		var wealthCreated = this.getChangeInInv(this.numYears) - this.initInvest - this.getTotalDividend(this.numYears);
-		if(-1 < wealthCreated && wealthCreated < 1) {
-			html += "<p>Wealth Created: <b>" + getCurrency(0) + "</b></p>";
+	this.performStrategy = function(){
+		if(this.dividendsReinvested){
+			this.performDividendReinvestmentStrategy();
 		} else {
-			html += "<p>Wealth Created: <b>" + getCurrency(wealthCreated) + "</b></p>";
+			this.performCashPaidStrategy();
 		}
-		
-		html += "<p>Net Profit: <b>" + getCurrency(this.getChangeInInv(this.numYears) - this.initInvest) + "</b></p>";
-		
-		return html;
-	};
-	this.getDetailedTitle = function(){
-		var title = "<span style='font-size: 30px;'>Scenario " + this.invType + "</span> : ";
-		if(this.invType == 1){
-			title += getPercentage(this.divPercent) + " Dividend (Cash Paid), No Growth, and No Volatility";
-		} else if(this.invType == 2){
-			title += getPercentage(this.divPercent) + " Dividend (Dividends Reinvested), No Growth, and No Volatility";
-		} else if(this.invType == 3){
-			title += getPercentage(this.divPercent) + " Dividend (Dividends Reinvested), " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate, and No Volatility";
-		} else {
-			title += getPercentage(this.divPercent) + " Dividend (Dividends Reinvested), " + getPercentage(this.divGrowthPercent) + " Dividend Growth Rate, and Share Price Volatility</li></ul>";
-		}
-		return title;
-	};	
-	this.getDetailedHTML = function(){
-		var html = "";
-		
-		html += "<h2>" + this.getDetailedTitle() + "</h2>";
-		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustInv" + this.invType + "'>Adjust Percentages</button> <br/>";
-		
-		html += "<table class='table-striped'>";
-		
-		// Value == investVals
-		// Income == Dividends
-		// Cumulative Return == Total Dividends Received as of N Years
-		
-		html += "<tr>";
-		html += "<th rowspan=2>Year</th> <th rowspan=2>Share<br/>Price</th> <th rowspan=2>Number of<br/>Shares</th> <th rowspan=2>Additional<br/>Shares<br/>Purchased</th> <th rowspan=2>Value</th>  <th rowspan=2>Income</th> <th rowspan=2>Yield *</th> <th rowspan=2>Cumulative<br/>Income</th> <th colspan=2>Account Value</th>";
-		html += "</tr>";
-		
-		html += "<tr>";
-		html += "<th>Start of Year</th> <th>End of Year</th>";
-		html += "</tr>";
+	}
 	
-		for(var i = 0 ; i < this.numYears ; i++){
-			
-			html += "<tr>";
-			html += "<td>" + (i + 1) + "</td>";
-			
-			if(i == 0 && (this.invType == 4 || this.invType == 5)){
-				
-				var changeInitSharePrice = 'changeInitSharePrice(this.value, ' + i + ',' + this.invType + ')';
-				html += "<td>$<input onchange='" + changeInitSharePrice + "' value='" + numWithCommas(parseFloat(this.sharePrices[i]).toFixed(2)) + "' size=6></input></td>";
-			} else if(this.invType == 4 || this.invType == 5){
-				
-				var changeSharePrice = 'changeSharePrice(this.value, ' + i + ',' + this.invType + ')';
-				html += "<td>$<input onchange='" + changeSharePrice + "' value='" + numWithCommas(parseFloat(this.sharePrices[i]).toFixed(2)) + "' size=6></input></td>";
-			} else {
-				
-				html += "<td>" + getCurrency(this.sharePrices[i])+ "</td>";
-			}
-			
-			// num shares
-			html += "<td>" + parseInt(this.numShares[i]) + "</td>";
-			
-			// added shares
-			html += "<td style='font-weight: bold; color: #009900; background-color: #ffffb3'>" + parseInt(this.getAddedShares()[i]) + "</td>";
-			
-			// value
-			var accountValue = this.investVals[i];
-			
-			if(accountValue < this.initInvest){
-				html += "<td style='color: red'>";
-			} else {
-				html += "<td>";
-			}
-			html += getCurrency(accountValue) + "</td>";
-			
-			// income
-			html += "<td style='font-weight: bold; background-color: #ffffb3'>" + getCurrency(this.dividends[i]) + "</td>";
-			
-			// yield *
-			html += "<td>" + getPercentage((this.dividends[i] / this.investVals[0]) * 100) + "</td>";
-			
-			html += "<td>" + getCurrency(this.getTotalDividend((i + 1))) + "</td>";
-			
-			if(i > 0 && this.invType == 1){
-			
-				var yearStartAccountValue = this.investVals[i] + this.getTotalDividend(i);
-				
-				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'><b>";
-				} else {
-					html += "<td><b>";
-				}
-				
-				html += getCurrency(yearStartAccountValue) + "</b></td>";
-			} else {
-				
-				var yearStartAccountValue = this.investVals[i];
-				
-				if(yearStartAccountValue < this.initInvest){
-					html += "<td style='color: red'><b>";
-				} else {
-					html += "<td><b>";
-				}
-				
-				html += getCurrency(yearStartAccountValue) + "</b></td>";
-			}
-			
-			var yearEndAccountValue = this.getChangeInInv(i + 1);
-			
-			if(yearEndAccountValue < this.initInvest){
-				html += "<td style='color: red'><b>";
-			} else {
-				html += "<td><b>";
-			}
-			
-			html += getCurrency(yearEndAccountValue) + "</b></td>";
-			
-			html += "</tr>";
-		}
-				
-		html +=" <tr>";
-		html += "<th style='background-color: #14446c' colspan=3></th>";
-		html += "<th style='background-color: #14446c'>Total<br/>Shares<br/>Purchased</th>";
-		html += "<th style='background-color: #14446c' colspan=1></th>";
-		html += "<th style='background-color: #14446c'>Total<br/>Income<br/>Paid</th>";
-		html += "<th style='background-color: #14446c' colspan=4></th>";
-		html += "</tr>";
-		
-		html +="<tr>";
-		html += "<td colspan=3></th>";
-		html += "<td style='color: #009900; background-color: #ffffb3'><b>" + parseInt(this.getTotalAddedShares()) + "</b></td>";
-		html += "<td colspan=1></th>";
-		html += "<td style='background-color: #ffffb3'><b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b></td>";
-		html += "<td colspan=4></td>";
-		html += "</tr>";
-		
-		html += "</table>";
-		
-		html += "<p class='smallTxt'>* : Based on Initial Investment</p>";
-			
-		html += "<div class='container-fluid text-center'>";
-		
-		html += "<div class='col-lg-4'>Net Total Return: <b>" + getPercentage(this.getROI()) + " ("+ getPercentage(this.getAnnROI()) + " Compound)</b></div>";
-		
-		html += "<div class='col-lg-2'>Income Growth: <b>" + getPercentage(((this.dividends[this.numYears - 1] / this.dividends[0]) - 1) * 100) + "</b></div>";
-		
-		html += "<div class='col-lg-6'>";
-		
-		html += "Income Paid: <b>" + getCurrency(this.getTotalDividend(this.numYears)) + "</b>";
-		
-		html += " + ";
-		
-		var wealthCreated = this.getChangeInInv(this.numYears) - this.initInvest - this.getTotalDividend(this.numYears);
-		if(-1 < wealthCreated && wealthCreated < 1) {
-			html += "Wealth Created: <b>" + getCurrency(0) + "</b>";
-		} else {
-			html += "Wealth Created: <b>" + getCurrency(wealthCreated) + "</b>";
-		}
-		
-		html += " = ";
-		
-		html += "Net Profit: <b>" + getCurrency(this.getChangeInInv(this.numYears) - this.initInvest) + "</b>";
-		
-		html += "</div>";
-		
-		html += "</div>";
-		
-		return html;
-	};
+	this.getTotalSharesPurchased = function(){
+		return sumList(this.data.additionalSharesPurchasedList);
+	}
+	
+	this.getTotalIncomePaid = function(){
+		return sumList(this.data.incomeList);
+	}
+	
+	this.getNetTotalReturn = function(){
+		return (this.data.accountValueEndList[this.yearsInvested - 1] / this.initialInvestment) - 1;
+	}
+	
+	this.getNetTotalReturnCompounded = function(){
+		return Math.pow(this.data.accountValueEndList[this.yearsInvested - 1] / this.initialInvestment, 1 / this.yearsInvested) - 1;
+	}
+	
+	this.getIncomeGrowth = function(){
+		return (this.data.incomeList[this.yearsInvested - 1] / this.data.incomeList[0]) - 1;
+	}
+	
+	this.getWealthCreated = function(){
+		return this.data.accountValueEndList[this.yearsInvested - 1] - this.initialInvestment - this.getTotalIncomePaid();
+	}
+	
+	this.getNetProfit = function(){
+		return this.data.accountValueEndList[this.yearsInvested - 1] - this.initialInvestment;
+	}
 }
 
-// currency formatting
-function getCurrency(value){
-	return "$" + numWithCommas(parseFloat(value).toFixed(2));
+function InvestmentData(){
+	this.numberOfSharesList = [];
+	this.additionalSharesPurchasedList = [];
+	this.yieldList = [];
+	this.incomeList = [];
+	this.cumulativeIncomeList = [];
+	this.accountValueList = [];
+	this.accountValueStartList = [];
+	this.accountValueEndList = [];
 }
 
-// percentage formatting
-function getPercentage(value){
-	return numWithCommas(parseFloat(value).toFixed(2)) + "%";
+// UTILITY FUNCTIONS
+
+// Get maximum value of a list
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max
+function maxOfList(numArray) {
+  return Math.max.apply(null, numArray);
 }
 
-// https://stackoverflow.com/questions/12503146/create-an-array-with-same-element-repeated-multiple-times-in-javascript
-function fillList(value, len) {
-  var arr = [];
-  for (var i = 0; i < len; i++) {
-    arr.push(value);
-  }
-  return arr;
-}
-
-// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
-function numWithCommas(x) {
-    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
-
+// Get list ranging from: start to end - 1
 // https://stackoverflow.com/questions/3746725/create-a-javascript-array-containing-1-n
 function range(start, end) {
     var foo = [];
@@ -1515,10 +1175,39 @@ function range(start, end) {
     return foo;
 }
 
-// https://stackoverflow.com/questions/13911681/remove-html-tags-from-a-javascript-string
-function removeTags(str){
-	var rex = /(<([^>]+)>)/ig;
-	return str.replace(rex, " ");
+// Sum of elements in list
+function sumList(arr){
+	sum = 0;
+	for(var i = 0 ; i < arr.length ; i++){
+		sum += arr[i];
+	}
+	return sum;
+}
+
+// Fill list of size N with the same element
+// https://stackoverflow.com/questions/12503146/create-an-array-with-same-element-repeated-multiple-times-in-javascript
+function fillList(value, len) {
+  var arr = [];
+  for (var i = 0; i < len; i++) {
+    arr.push(value);
+  }
+  return arr;
+}
+
+// Comma formatting
+// https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+function parseCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// Currency formatting
+function parseCurrency(value){
+	return "$" + parseCommas(parseFloat(value).toFixed(2));
+}
+
+// Percentage formatting
+function parsePercentage(value){
+	return parseCommas(parseFloat(value).toFixed(2)) + "%";
 }
 </script>
 
