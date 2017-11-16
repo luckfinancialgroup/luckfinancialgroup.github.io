@@ -22,8 +22,8 @@ body {
 	letter-spacing: 1px;
 	background-image: url('BG.png');
 }
-input {
-	color: #4d4d4d;
+img {
+	margin: 15px;
 }
 h2 {
 	font-weight: bold;
@@ -41,6 +41,12 @@ table * {
 th {
 	color: #ffffff;
 	background-color: #14446c;
+}
+input {
+	color: #4d4d4d;
+}
+.smallTxt {
+	font-size: 12px;
 }
 #banner {
 	background-image: url('bannerBG.png');
@@ -74,12 +80,6 @@ th {
 	border: 2px solid #ccc;
 	font-weight: bold;
 	font-size: 16px;
-}
-img {
-	margin: 15px;
-}
-.smallTxt {
-	font-size: 12px;
 }
 #detailedView table * {
 	padding: 15px;
@@ -482,6 +482,8 @@ function getInvestment(scenarioNumber){
 
 function setSharePrice(sharePrice, position, scenarioNumber){
 	
+	sharePrice = sharePrice.replace(/([$]|[,]|[ ])+/g, '');
+	
 	var investment = getInvestment(scenarioNumber);
 	
 	if(position == 0){
@@ -587,7 +589,7 @@ function getDetailedView(investment, scenarioNumber){
 			
 			// Share Price
 			if(scenarioNumber == 3 || scenarioNumber == 4){
-				html += "<td>$<input onblur='setSharePrice(this.value," + i + "," + scenarioNumber + ")' value='" + parseCommas(parseFloat(investment.sharePriceList[i]).toFixed(2)) + "' size=6 onkeypress='checkSetSharePriceEnter(event, this.value," + i + "," + scenarioNumber + ")'></input></td>";
+				html += "<td><input onblur='setSharePrice(this.value," + i + "," + scenarioNumber + ")' value='" + parseCurrency(parseFloat(investment.sharePriceList[i]).toFixed(2)) + "' size=6 onkeypress='checkSetSharePriceEnter(event, this.value," + i + "," + scenarioNumber + ")'></input></td>";
 			} else {
 				html += "<td>" + parseCurrency(investment.sharePriceList[i]) + "</td>";
 			}
@@ -688,7 +690,7 @@ function getComparisonView(investment, scenarioNumber){
 		var html = "";
 		
 		// Title
-		html += "<h2>" + getInvestmentTitle(investment, scenarioNumber) + "</h2>";
+		html += "<h2>" + getInvestmentTitle(investment, scenarioNumber).replace(/(: )+/g, ':<br/>') + "</h2>";
 		
 		// Allow user to change: Dividend Yield, and Dividend Growth Rate
 		html += "<button type='button' class='btn btn-default' data-toggle='modal' data-target='#modalAdjustRates' onclick='getAdjustRatesForm(" + scenarioNumber + ")'>Adjust Percentages</button> <br/>";
@@ -711,7 +713,7 @@ function getComparisonView(investment, scenarioNumber){
 			
 			// Share Price
 			if(scenarioNumber == 3 || scenarioNumber == 4){
-				html += "<td>$<input onblur='setSharePrice(this.value," + i + "," + scenarioNumber + ")' value='" + parseCommas(parseFloat(investment.sharePriceList[i]).toFixed(2)) + "' size=6 onkeypress='checkSetSharePriceEnter(event, this.value," + i + "," + scenarioNumber + ")'></input></td>";
+				html += "<td><input onblur='setSharePrice(this.value," + i + "," + scenarioNumber + ")' value='" + parseCurrency(parseFloat(investment.sharePriceList[i]).toFixed(2)) + "' size=6 onkeypress='checkSetSharePriceEnter(event, this.value," + i + "," + scenarioNumber + ")'></input></td>";
 			} else {
 				html += "<td>" + parseCurrency(investment.sharePriceList[i]) + "</td>";
 			}
