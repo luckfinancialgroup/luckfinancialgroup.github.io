@@ -51,19 +51,19 @@ input {
 #banner {
 	background-image: url('bannerBG.png');
 }
-#assumptions {
-	color: #ffffff;
-	background-color: #14446c;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	box-shadow: 0 0 20px #333;
-}
 #luckLogo {
 	margin-top: 25px;
 	height: 125px;
 }
 #incomeAccelLogo {
 	height: 125px;
+}
+#assumptions {
+	color: #ffffff;
+	background-color: #14446c;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	box-shadow: 0 0 20px #333;
 }
 #assumptionsForm {
 	padding-top: 25px;
@@ -381,8 +381,8 @@ $(document).ready(function() {
 		dividendGrowthRate = dividendGrowthRate * 0.01;
 		yearsInvested = yearsInvested * 1;
 		
-		$('#initialInvestInput').val(parseCurrency(initialInvestment));
-		$('#inititialSharePriceInput').val(parseCurrency(initialSharePrice));
+		$('#initialInvestmentInput').val(parseCurrency(initialInvestment));
+		$('#initialSharePriceInput').val(parseCurrency(initialSharePrice));
 		$('#dividendYieldInput').val(parsePercentage(dividendYield * 100));
 		$('#dividendGrowthRateInput').val(parsePercentage(dividendGrowthRate * 100));
 		$('#yearsInvestedInput').val(yearsInvested);
